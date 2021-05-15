@@ -8,12 +8,13 @@ URL_PREFIX ="https://www.warcraftlogs.com/reports/"
 #Set up logger
 logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
+handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)
 
 client = discord.Client()
 
+#Get private discord token from file
 def get_token():
     with open("token.txt", "r") as f:
         return f.readline().strip()
@@ -27,37 +28,15 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    #DELETE LATER
-    messages = await message.channel.history().flatten()
-    if message.content.startswith("clear"):
-        await message.channel.delete_messages(messages)
-        await message.channel.send(f"{message.author.mention} wlasnie rozjebal wszystkie wiadomosci xD", delete_after=10)
-
-    #DELETE LATER
-    if message.content.startswith("task"):
-        task_id = 0
-        async for _ in message.channel.history():
-            task_id += 1
-
-        await message.delete()
-        msg = await message.channel.send(embed=discord.Embed(title=f"Task {task_id}", description=message.content[4:]))
-        await msg.add_reaction(u"👍")
-
     if message.content.startswith(URL_PREFIX):
-        warcraftlogs_url = message.content
-        await message.channel.send(embed=create_warcraftlogs_embed(url=warcraftlogs_url))
-
-#DELETE LATER
-@client.event
-async def on_reaction_add(reaction, user):
-    if user.bot:
-        return
-    if reaction.emoji == u"👍":
-        await reaction.message.delete()
-
+        msg = await message.channel.send(embed=create_warcraftlogs_embed(url=message.content))
+        await msg.add_reaction(u"✅")
+        await msg.add_reaction(u"❎")
+        await msg.add_reaction(u"📧")
+        
 def create_warcraftlogs_embed(url: str):
     code = url[len(URL_PREFIX):]
-    time = datetime.now()
+    #logs = WarcraftlogsAPI(code)
 
     test_embed = {
         "title": "Bot",
@@ -65,7 +44,7 @@ def create_warcraftlogs_embed(url: str):
         "url": url,
         "color": 15,
         "footer": {
-            "text": time
+            "text": str(datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
         },
         "thumbnail": {
             "url": url
