@@ -1,7 +1,6 @@
-from warcraftlogs import WarcraftlogsAPI
 import discord
 import logging
-from datetime import datetime
+from embed_logs import EmbedLogsMesage
 
 URL_PREFIX ="https://www.warcraftlogs.com/reports/"
 
@@ -29,42 +28,10 @@ async def on_message(message):
         return
 
     if message.content.startswith(URL_PREFIX):
-        msg = await message.channel.send(embed=create_warcraftlogs_embed(url=message.content))
+        msg = await message.channel.send(embed=EmbedLogsMesage(title="Test", url=message.content).create())
         await msg.add_reaction(u"✅")
         await msg.add_reaction(u"❎")
         await msg.add_reaction(u"📧")
-        
-def create_warcraftlogs_embed(url: str):
-    code = url[len(URL_PREFIX):]
-    #logs = WarcraftlogsAPI(code)
-
-    test_embed = {
-        "title": "Bot",
-        "description": "Test description",
-        "url": url,
-        "color": 15,
-        "footer": {
-            "text": str(datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-        },
-        "thumbnail": {
-            "url": url
-        },
-        "author": {
-            "name": "Bot maciek",
-        },
-        "fields": [{
-            "name": "Bot maciek",
-            "value": "bot andrzej"
-        },{
-            "name": "Bot maciek",
-            "value": "bot andrzej" 
-        },{
-            "name": "Bot maciek",
-            "value": "bot andrzej" 
-        }]
-    }
-
-    return discord.Embed.from_dict(data=test_embed)
 
 if __name__ == "__main__":
     client.run(get_token())
