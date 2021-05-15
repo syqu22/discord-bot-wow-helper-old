@@ -1,5 +1,5 @@
 import requests
-from events import Type, Metric, PlayerClass
+from enums import Events, Metric, Player
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 CLIENT_KEY = "112af4ad330a251cbdc08faa580f3724"
@@ -20,7 +20,7 @@ class WarcraftlogsAPI():
         else:
             return None
 
-    def get_events(self, view: Type, end: int, start: int = 0, source_id: int = None, cutoff: int = 3):
+    def get_events(self, view: Events, end: int, start: int = 0, source_id: int = None, cutoff: int = 3):
         params = {
             "code": self.code,
             "cutoff": cutoff,
@@ -29,6 +29,7 @@ class WarcraftlogsAPI():
             "end": end,
             "source_id": source_id,
             "api_key": CLIENT_KEY,
+            "translate": True
         }
         events = requests.get(API_URL + "tables/" + view.value + self.code, params=params)
 
@@ -37,12 +38,13 @@ class WarcraftlogsAPI():
         else:
             return None
 
-    def get_rankings(self, encounter_id: int, metric: Metric, player_class: PlayerClass, player_spec: PlayerClass, page: int):
+    def get_rankings(self, encounter_id: int, metric: Metric, player_class: Player, player_spec: Player, page: int):
         params = {
             "metric": metric.value,
-            "player_class": PlayerClass.value,
-            "player_spec": PlayerClass.value,
-            "page": page
+            "player_class": player_class.value,
+            "player_spec": player_spec.value,
+            "page": page,
+            "includeCombatantInfo": False
         }
         rankings = requests.get(API_URL + "rankings/encounter/" + encounter_id, params=params)
 
