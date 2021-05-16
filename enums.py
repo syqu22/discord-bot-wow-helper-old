@@ -18,6 +18,12 @@ class Metric(Enum):
     DPS = "dps"
     HPS = "hps"
 
+class Zones(Enum):
+    MYTHIC_PLUS = 25
+    CASTLE_NATHRIA = 26
+    TORGHAST = 27
+    SANCTUM_OF_DOMINATION = 28
+
 class Player(Enum):
     DK = 1
     DK_BLOOD = 1

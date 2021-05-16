@@ -30,22 +30,28 @@ class WarcraftlogsAPI():
     def get_fights(self):
         return self.log_info["fights"]
 
-    def get_log_duration(self):
-        return abs(self.log_info["start"] - self.log_info["end"])
+    def get_log_start(self):
+        return self.log_info["start"]
 
-    def get_zone(self):
+    def get_log_end(self):
+        return self.log_info["end"]
+
+    def get_log_duration(self):
+        return abs(self.get_log_start() - self.get_log_end())
+
+    def get_owner(self):
         return self.log_info["owner"]
 
-    def get_game_version(self):
-        return self.log_info["gameVersion"]
+    def get_zone(self):
+        return self.log_info["zone"]
 
-    def get_events(self, view: Events, end: int, start: int = 0, source_id: int = None, cutoff: int = 3):
+    def get_events(self, view: Events, source_id: int = None, cutoff: int = 3):
         params = {
             "code": self.code,
             "cutoff": cutoff,
             "translate": True,
-            "start": start,
-            "end": end,
+            "start": self.get_log_start(),
+            "end": self.get_log_end(),
             "source_id": source_id,
             "api_key": CLIENT_KEY,
             "translate": True
