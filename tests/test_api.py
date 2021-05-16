@@ -44,6 +44,19 @@ def test_get_characters(logs):
     assert [x["id"] and x["name"] and x["region"] and x["server"] for x in characters]
     assert next(x for x in characters if x["name"] == "Squy" and "Elibear" and "Loafcake" and "Arioni" and "Lilborn")
 
+def test_get_fight(logs):
+    """
+    Given the logs code
+    Return a namedtuple fight object
+    """
+    fight = logs.get_fight(2)
+
+    assert fight
+    assert fight.name == "Stone Legion Generals"
+    assert fight.start_time == 759237  
+    assert fight.end_time == 766400 
+    assert fight.boss == 0
+
 def test_get_fights(logs):
     """
     Given the logs code
@@ -54,40 +67,6 @@ def test_get_fights(logs):
     assert type(fights) == list
     assert [x["boss"] and x["id"] and x["name"] and x["bossPercentage"] and x["start_time"] and x["end_time"] and x["difficulty"] for x in fights]
     assert next(x for x in fights if x["name"] == "Sire Denathrius" and "Sludgefist" and "Stone Legion Generals")
-
-
-def test_get_log_start(logs):
-    """
-    Given the logs code
-    Return an int of logs start in milliseconds
-    """
-    start = logs.get_log_start()
-
-    assert start
-    assert type(start) == int
-
-def test_get_log_end(logs):
-    """
-    Given the logs code
-    Return an int of logs end in milliseconds
-    """
-    end = logs.get_log_end()
-
-    assert end
-    assert type(end) == int
-
-
-def test_get_log_duration(logs):
-    """
-    Given the logs code
-    Return an duration of logs that comes from the difference of logs start time and end time
-    """
-    duration = logs.get_log_duration()
-    start = logs.get_log_start()
-    end = logs.get_log_end()
-
-    assert duration
-    assert abs(start - end) == duration
 
 def test_get_owner(logs):
     """
@@ -110,11 +89,38 @@ def test_get_zone(logs):
     assert zone
     assert zone == Zones.CASTLE_NATHRIA.value
 
-def test_summary_events(logs):
-    assert logs.get_events(Events.SUMMARY, logs.get_log_end())
+def test_get_logs_duration(logs):
+    """
+    Given the logs code
+    Return the zone id of logs
+    """
+    duration = logs.get_logs_duration()
 
-def test_get_damage_events(logs):
-    assert logs.get_events(Events.DAMAGE_DONE, logs.get_log_end())
+    assert duration
+    assert duration == 10700162
 
-def test_get_healing_events(logs):
-    assert logs.get_events(Events.HEALING, logs.get_log_end())
+def test_get_logs_total_duration(logs):
+    """
+    Given the logs code
+    Return a duration of logs that comes from the difference of logs start time and end time
+    """
+    duration = logs.get_logs_total_duration()
+
+    assert duration
+    assert type(duration) == int
+    assert duration == 10905831
+
+#def test_summary_events(logs):
+#    events = logs.get_events(Events.SUMMARY)
+#
+#    assert events
+#    assert events == 1
+
+#def test_get_damage_events(logs):
+#    assert logs.get_events(Events.DAMAGE_DONE)
+
+#def test_get_healing_events(logs):
+#    assert logs.get_events(Events.HEALING)
+
+#def test_get_deaths_events(logs):
+#    assert logs.get_events(Events.HEALING)

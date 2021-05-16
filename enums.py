@@ -9,7 +9,7 @@ class Events(Enum):
     #SUMMONS = "summons"
     #BUFFS = "buffs"
     #DEBUFFS = "debuffs"
-    #DEATHS = "deaths"
+    DEATHS = "deaths"
     #SURVIVABILITY = "survivability"
     #RESOURCES = "resources"
     #RESOUCES_GAINS = "resources-gains"
