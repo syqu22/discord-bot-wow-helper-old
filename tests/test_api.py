@@ -2,7 +2,7 @@
 This file contains unit tests for the Warcraft Logs API
 """
 import pytest
-from enums import Events, Zones
+from utils import Events, Zones
 from warcraftlogs import WarcraftlogsAPI
 
 @pytest.fixture(scope="module")
@@ -92,7 +92,7 @@ def test_get_zone(logs):
 def test_get_logs_duration(logs):
     """
     Given the logs code
-    Return the zone id of logs
+    Return a duration of logs that is based on the first and last pull
     """
     duration = logs.get_logs_duration()
 
@@ -107,7 +107,6 @@ def test_get_logs_total_duration(logs):
     duration = logs.get_logs_total_duration()
 
     assert duration
-    assert type(duration) == int
     assert duration == 10905831
 
 #def test_summary_events(logs):
