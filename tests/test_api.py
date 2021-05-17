@@ -2,8 +2,18 @@
 This file contains unit tests for the Warcraft Logs API
 """
 import pytest
+import requests
 from utils import Events, Zones
 from warcraftlogs import WarcraftlogsAPI
+
+def test_api_connection():
+    """
+    Do two GET requests to API docs and Warcraftlogs site to check if it is reachable
+    """
+    request = requests.get("https://www.warcraftlogs.com")
+    assert request.status_code == 200
+    request = requests.get("https://www.warcraftlogs.com/v1/docs")
+    assert request.status_code == 200
 
 @pytest.fixture(scope="module")
 def logs():
@@ -12,9 +22,10 @@ def logs():
     """
     return WarcraftlogsAPI("21WVgBJ6zkwmxPNF")
 
+
 def test_get_log_info(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return a non empty dictionary
     """
     info = logs.get_log_info()
@@ -24,7 +35,7 @@ def test_get_log_info(logs):
 
 def test_get_title(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return a valid string title
     """
     title = logs.get_title()
@@ -34,7 +45,7 @@ def test_get_title(logs):
 
 def test_get_characters(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return a list of dicts with every Character
     """
     characters = logs.get_characters()
@@ -46,31 +57,36 @@ def test_get_characters(logs):
 
 def test_get_fight(logs):
     """
-    Given the logs code
-    Return a namedtuple fight object
+    Given the logs fixture
+    Return a Fight object and validate it
     """
     fight = logs.get_fight(2)
 
     assert fight
+    assert fight.id == 7
+    assert fight.boss == 2417
+    assert fight.start_time == 1858600  
+    assert fight.end_time == 2106935 
+    assert fight.duration == abs(1858600 - 2106935)
     assert fight.name == "Stone Legion Generals"
-    assert fight.start_time == 759237  
-    assert fight.end_time == 766400 
-    assert fight.boss == 0
+    assert fight.zoneName == "Castle Nathria"
+    assert fight.difficulty == 5
+    assert fight.bossPercentage == "72.49%"
+    assert fight.rest
 
-def test_get_fights(logs):
+def test_get_fights_amount(logs):
     """
-    Given the logs code
-    Return a list of dicts of fights
+    Given the logs fixture
+    Return the amount of fights in logs
     """
-    fights = logs.get_fights()
+    fights = logs.get_fights_amount()
 
-    assert type(fights) == list
-    assert [x["boss"] and x["id"] and x["name"] and x["bossPercentage"] and x["start_time"] and x["end_time"] and x["difficulty"] for x in fights]
-    assert next(x for x in fights if x["name"] == "Sire Denathrius" and "Sludgefist" and "Stone Legion Generals")
+    assert fights
+    assert fights == 18
 
 def test_get_owner(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return the name of logs owner
     """
     owner = logs.get_owner()
@@ -81,7 +97,7 @@ def test_get_owner(logs):
 
 def test_get_zone(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return the zone id of logs
     """
     zone = logs.get_zone()
@@ -89,22 +105,22 @@ def test_get_zone(logs):
     assert zone
     assert zone == Zones.CASTLE_NATHRIA.value
 
-def test_get_logs_duration(logs):
+def test_get_duration(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return a duration of logs that is based on the first and last pull
     """
-    duration = logs.get_logs_duration()
+    duration = logs.get_duration()
 
     assert duration
-    assert duration == 10700162
+    assert duration == 10699851
 
-def test_get_logs_total_duration(logs):
+def test_get_total_duration(logs):
     """
-    Given the logs code
+    Given the logs fixture
     Return a duration of logs that comes from the difference of logs start time and end time
     """
-    duration = logs.get_logs_total_duration()
+    duration = logs.get_total_duration()
 
     assert duration
     assert duration == 10905831
