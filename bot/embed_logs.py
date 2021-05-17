@@ -10,7 +10,7 @@ class EmbedLogsMesage():
     def __init__(self, title: str, url: str):
         self.title = title
         self.url = url
-        self.code = url[37:]
+        self.code = url[37:53] # TODO FIX
 
     def create(self):
         

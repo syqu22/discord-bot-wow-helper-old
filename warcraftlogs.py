@@ -25,13 +25,13 @@ class WarcraftlogsAPI():
 
     def get_title(self):
         """
-        Returns logs title
+        Returns the logs title `str`
         """
         return self.log_info["title"]
     
     def get_characters(self):
         """
-        Returns characters from logs
+        Returns a `dict` of characters from logs
         """
         if self.get_zone() == Zones.TORGHAST.value:
             return "Torghast logs are not supported."
@@ -42,25 +42,16 @@ class WarcraftlogsAPI():
 
     def get_fight(self, fight_number):
         """
-        Returns a Fight object
-
-        :param id: returns the id of fight number in logs
-        :param boss: returns the boss id
-        :param start_time: returns a start time of the encounter in milliseconds (based on entire log)
-        :param end_time: returns a end time of the encounter in milliseconds (based on entire log)
-        :param duration: returns the duration of the fight in milliseconds
-        :param name: returns name of the boss as a string
-        :param zoneName: returns the zone name of the fight as a string
-        :param difficulty: returns the fight difficulty (Mythic = 5)
-        :param bossPercentage: returns boss health in % or an information that the boss died as a string
-        :param rest: contain the rest of parameters that are less useful
+        Returns the `Fight` object from `list` of fights
+        with the given fight_number
         """
         fight = self.get_fights()[fight_number]
         return Fight(**fight)
 
     def get_fights(self):
         """
-        Returns fights from logs as a list of dicts
+        Returns `list` of `dict` fights from logs
+        (excluding trash and reset pulls)
         """  
         fights = self.log_info["fights"]
         fights[:] = [e for e in fights if e.get("boss")]
@@ -68,35 +59,39 @@ class WarcraftlogsAPI():
 
     def get_fights_amount(self):
         """
-        Returns the amount of fights as int
+        Returns the :`int` number of fights
         """
 
         return len(self.get_fights())
 
     def get_duration(self):
         """
-        Use only when you want end_time for events from entire logs
-        Returns a duration of logs that is based on the first and last pull
+        Use for events when you need to check entire logs timeline.
+
+        Returns the `int` duration of logs that is based on the first and last pull
         """
         return self.get_fights()[-1]["end_time"]
 
     def get_total_duration(self):
         """
-        Use to determine time length of logs
-        Return a duration of logs that comes from the difference of logs start time and end time
+        Use to calculate duration of logs
+
+        Returns the `int` duration of logs that comes from the
+        difference of first and last event
         """
         return abs(self.log_info["start"] - self.log_info["end"])
 
     def get_owner(self):
         """
-        Returns the name of the logs owner as a string
+        Returns the `str` name of the logs owner
         """
         return self.log_info["owner"]
 
     def get_zone(self):
         """
-        Returns the id of the logs zone
-        Check zones in utils/Zones
+        Returns the id of the logs zone as an `int`
+
+        Check for zones in utils/Zones
         """
         return self.log_info["zone"]
 
