@@ -1,10 +1,8 @@
 import requests
-from utils import Events, Metric, Player, Zones
 from fight import Fight
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 CLIENT_KEY = "112af4ad330a251cbdc08faa580f3724"
-CURRENT_RAID = Zones.CASTLE_NATHRIA
 
 
 class WarcraftlogsAPI():
@@ -34,12 +32,7 @@ class WarcraftlogsAPI():
         """
         Returns a `dict` of characters from logs
         """
-        if self.get_zone() == Zones.TORGHAST.value:
-            return "Torghast logs are not supported."
-        elif self.get_zone() > Zones.CASTLE_NATHRIA.value:
-            return "Characters cannot be accessed from PTR."
-        else:
-            return self.log_info["exportedCharacters"]
+        return self.log_info["exportedCharacters"]
 
     def get_fight(self, fight_number):
         """
@@ -52,17 +45,20 @@ class WarcraftlogsAPI():
     def get_fights(self):
         """
         Returns `list` of `dict` fights from logs
-        (excluding trash and reset pulls)
+        (excluding trash and reset pulls if it is raid)
         """
         fights = self.log_info["fights"]
-        fights[:] = [e for e in fights if e.get("boss")]
-        return fights
+        # If logs zone is inside M+ or Torghast include trash pulls
+        if self.get_zone() == "Torghast" or self.get_zone() == "Mythic+":
+            return fights
+        else:
+            fights[:] = [e for e in fights if e.get("boss")]
+            return fights
 
     def get_fights_amount(self):
         """
         Returns the :`int` number of fights
         """
-
         return len(self.get_fights())
 
     def get_duration(self):
@@ -90,43 +86,22 @@ class WarcraftlogsAPI():
 
     def get_zone(self):
         """
-        Returns the id of the logs zone as an `int`
+        Returns the name of the logs zone as an `str`
 
-        Check for zones in utils/Zones
+        MYTHIC_PLUS = 25
+        CASTLE_NATHRIA = 26
+        TORGHAST = 27
+        SANCTUM_OF_DOMINATION = 28
+        NEXT_RAID = 29...
         """
-        return self.log_info["zone"]
-
-    # TODO EVENTS
-    # def get_events(self, view: Events, source_id: int = None, cutoff: int = 3):
-    #    params = {
-    #        "code": self.code,
-    #        "cutoff": cutoff,
-    #        "translate": True,
-    #        "start": 0,
-    #        "end": self.get_duration(),
-    #        "source_id": source_id,
-    #        "api_key": CLIENT_KEY,
-    #        "translate": True
-    #    }
-    #    print(API_URL + "tables/" + view.value + "/" + self.code)
-    #    events = requests.get(API_URL + "tables/" + view.value + "/" + self.code, params=params)
-    #
-    #    if events.status_code == 200:
-    #        return events.json()
-    #    else:
-    #        return None
-    #
-    # def get_rankings(self, encounter_id: int, metric: Metric, player_class: Player, player_spec: Player, page: int):
-    #    params = {
-    #        "metric": metric.value,
-    #        "player_class": player_class.value,
-    #        "player_spec": player_spec.value,
-    #        "page": page,
-    #        "includeCombatantInfo": False
-    #    }
-    #    rankings = requests.get(API_URL + "rankings/encounter/" + encounter_id, params=params)
-    #
-    #    if rankings.status_code == 200:
-    #        return rankings.json()
-    #    else:
-    #        return None
+        zone = self.log_info["zone"]
+        if zone == 25:
+            return "Mythic+"
+        elif zone == 26:
+            return "Castle Nathria"
+        elif zone == 27:
+            return "Torghast"
+        elif zone == 28:
+            return "Sanctum of Domination"
+        elif zone == 29:
+            return "Future raid..."

@@ -20,11 +20,13 @@ class Fight(object):
             Fight difficulty (Mythic = 5)
         bossPercentage: `str`
             Boss health in % or an information that the boss died
-        rest: `dict`
-            Rest of parameters
+        others: `dict`
+            Other parameters like: 
+                - bossPercentage (boss health `int`)
+                - kill (is boss dead or not `bool`)
         """
 
-    def __init__(self, id: int, boss: int, start_time: int, end_time: int, name: str, zoneName: str, difficulty: int, bossPercentage: int, **rest: dict):
+    def __init__(self, id: int, boss: int, start_time: int, end_time: int, name: str, zoneName: str, **others: dict):
         self.id = id
         self.boss = boss
         self.start_time = start_time
@@ -32,12 +34,15 @@ class Fight(object):
         self.duration = self.set_duration()
         self.name = name
         self.zoneName = zoneName
-        self.difficulty = self.set_difficulty(difficulty)
-        self.rest = rest
-        self.bossPercentage = self.set_bossPercentage(bossPercentage)
+        self.others = others
+        # Check if fight contains every information (m+ logs do not have these)
+        if "difficulty" in self.others:
+            self.difficulty = self.set_difficulty(others["difficulty"])
+            self.bossPercentage = self.set_bossPercentage(
+                others["bossPercentage"])
 
     def set_bossPercentage(self, bossPercentage: int):
-        if self.rest["kill"] == True:
+        if self.others["kill"] == True:
             return "Dead!"
         else:
             return str(bossPercentage / 100) + "%"
