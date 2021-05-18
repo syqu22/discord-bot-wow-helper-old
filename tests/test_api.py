@@ -3,7 +3,6 @@ This file contains unit tests for the Warcraft Logs API
 """
 import pytest
 import requests
-from utils import Events, Zones
 from warcraftlogs import WarcraftlogsAPI
 
 
@@ -77,9 +76,9 @@ def test_get_fight(logs):
     assert fight.duration == abs(1858600 - 2106935)
     assert fight.name == "Stone Legion Generals"
     assert fight.zoneName == "Castle Nathria"
-    assert fight.difficulty == 5
+    assert fight.difficulty == "Mythic"
     assert fight.bossPercentage == "72.49%"
-    assert fight.rest
+    assert fight.others
 
 
 def test_get_fights_amount(logs):
@@ -112,7 +111,7 @@ def test_get_zone(logs):
     zone = logs.get_zone()
 
     assert zone
-    assert zone == Zones.CASTLE_NATHRIA.value
+    assert zone == "Castle Nathria"
 
 
 def test_get_duration(logs):
@@ -135,18 +134,3 @@ def test_get_total_duration(logs):
 
     assert duration
     assert duration == 10905831
-
-# def test_summary_events(logs):
-#    events = logs.get_events(Events.SUMMARY)
-#
-#    assert events
-#    assert events == 1
-
-# def test_get_damage_events(logs):
-#    assert logs.get_events(Events.DAMAGE_DONE)
-
-# def test_get_healing_events(logs):
-#    assert logs.get_events(Events.HEALING)
-
-# def test_get_deaths_events(logs):
-#    assert logs.get_events(Events.HEALING)
