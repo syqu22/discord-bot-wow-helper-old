@@ -6,6 +6,7 @@ import requests
 from utils import Events, Zones
 from warcraftlogs import WarcraftlogsAPI
 
+
 def test_api_connection():
     """
     Do two GET requests to API docs and Warcraftlogs site to check if it is reachable
@@ -14,6 +15,7 @@ def test_api_connection():
     assert request.status_code == 200
     request = requests.get("https://www.warcraftlogs.com/v1/docs")
     assert request.status_code == 200
+
 
 @pytest.fixture(scope="module")
 def logs():
@@ -33,6 +35,7 @@ def test_get_log_info(logs):
     assert info
     assert type(info) == dict
 
+
 def test_get_title(logs):
     """
     Given the logs fixture
@@ -43,6 +46,7 @@ def test_get_title(logs):
     assert title
     assert title == "Mythic 03/5 Farm"
 
+
 def test_get_characters(logs):
     """
     Given the logs fixture
@@ -52,8 +56,11 @@ def test_get_characters(logs):
 
     assert characters
     assert [type(x) == dict for x in characters]
-    assert [x["id"] and x["name"] and x["region"] and x["server"] for x in characters]
-    assert next(x for x in characters if x["name"] == "Squy" and "Elibear" and "Loafcake" and "Arioni" and "Lilborn")
+    assert [x["id"] and x["name"] and x["region"] and x["server"]
+            for x in characters]
+    assert next(x for x in characters if x["name"] ==
+                "Squy" and "Elibear" and "Loafcake" and "Arioni" and "Lilborn")
+
 
 def test_get_fight(logs):
     """
@@ -65,14 +72,15 @@ def test_get_fight(logs):
     assert fight
     assert fight.id == 7
     assert fight.boss == 2417
-    assert fight.start_time == 1858600  
-    assert fight.end_time == 2106935 
+    assert fight.start_time == 1858600
+    assert fight.end_time == 2106935
     assert fight.duration == abs(1858600 - 2106935)
     assert fight.name == "Stone Legion Generals"
     assert fight.zoneName == "Castle Nathria"
     assert fight.difficulty == 5
     assert fight.bossPercentage == "72.49%"
     assert fight.rest
+
 
 def test_get_fights_amount(logs):
     """
@@ -84,13 +92,14 @@ def test_get_fights_amount(logs):
     assert fights
     assert fights == 18
 
+
 def test_get_owner(logs):
     """
     Given the logs fixture
     Return the name of logs owner
     """
     owner = logs.get_owner()
-    
+
     assert owner
     assert owner == "Syqu22"
 
@@ -105,6 +114,7 @@ def test_get_zone(logs):
     assert zone
     assert zone == Zones.CASTLE_NATHRIA.value
 
+
 def test_get_duration(logs):
     """
     Given the logs fixture
@@ -114,6 +124,7 @@ def test_get_duration(logs):
 
     assert duration
     assert duration == 10699851
+
 
 def test_get_total_duration(logs):
     """
@@ -125,17 +136,17 @@ def test_get_total_duration(logs):
     assert duration
     assert duration == 10905831
 
-#def test_summary_events(logs):
+# def test_summary_events(logs):
 #    events = logs.get_events(Events.SUMMARY)
 #
 #    assert events
 #    assert events == 1
 
-#def test_get_damage_events(logs):
+# def test_get_damage_events(logs):
 #    assert logs.get_events(Events.DAMAGE_DONE)
 
-#def test_get_healing_events(logs):
+# def test_get_healing_events(logs):
 #    assert logs.get_events(Events.HEALING)
 
-#def test_get_deaths_events(logs):
+# def test_get_deaths_events(logs):
 #    assert logs.get_events(Events.HEALING)

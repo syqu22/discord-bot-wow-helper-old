@@ -1,8 +1,9 @@
 from enum import Enum
 
+
 class Events(Enum):
     SUMMARY = "summary"
-    DAMAGE_DONE = "damage-done"   
+    DAMAGE_DONE = "damage-done"
     DAMAGE_TAKEN = "damage-taken"
     HEALING = "healing"
     CASTS = "casts"
@@ -14,15 +15,18 @@ class Events(Enum):
     RESOURCES = "resources"
     RESOUCES_GAINS = "resources-gains"
 
+
 class Metric(Enum):
     DPS = "dps"
     HPS = "hps"
+
 
 class Zones(Enum):
     MYTHIC_PLUS = 25
     CASTLE_NATHRIA = 26
     TORGHAST = 27
     SANCTUM_OF_DOMINATION = 28
+
 
 class Player(Enum):
     DK = 1

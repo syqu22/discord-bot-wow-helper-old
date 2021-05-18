@@ -6,6 +6,7 @@ API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 CLIENT_KEY = "112af4ad330a251cbdc08faa580f3724"
 CURRENT_RAID = Zones.CASTLE_NATHRIA
 
+
 class WarcraftlogsAPI():
     def __init__(self, code: str):
         self.code = code
@@ -17,7 +18,7 @@ class WarcraftlogsAPI():
             "translate": True
         }
         fights = requests.get(API_URL + "fights/" + self.code, params=params)
-        
+
         if fights.status_code == 200:
             return fights.json()
         else:
@@ -28,7 +29,7 @@ class WarcraftlogsAPI():
         Returns the logs title `str`
         """
         return self.log_info["title"]
-    
+
     def get_characters(self):
         """
         Returns a `dict` of characters from logs
@@ -52,7 +53,7 @@ class WarcraftlogsAPI():
         """
         Returns `list` of `dict` fights from logs
         (excluding trash and reset pulls)
-        """  
+        """
         fights = self.log_info["fights"]
         fights[:] = [e for e in fights if e.get("boss")]
         return fights
@@ -95,9 +96,8 @@ class WarcraftlogsAPI():
         """
         return self.log_info["zone"]
 
-
     # TODO EVENTS
-    #def get_events(self, view: Events, source_id: int = None, cutoff: int = 3):
+    # def get_events(self, view: Events, source_id: int = None, cutoff: int = 3):
     #    params = {
     #        "code": self.code,
     #        "cutoff": cutoff,
@@ -116,7 +116,7 @@ class WarcraftlogsAPI():
     #    else:
     #        return None
     #
-    #def get_rankings(self, encounter_id: int, metric: Metric, player_class: Player, player_spec: Player, page: int):
+    # def get_rankings(self, encounter_id: int, metric: Metric, player_class: Player, player_spec: Player, page: int):
     #    params = {
     #        "metric": metric.value,
     #        "player_class": player_class.value,
