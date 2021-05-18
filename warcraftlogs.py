@@ -48,12 +48,8 @@ class WarcraftlogsAPI():
         (excluding trash and reset pulls if it is raid)
         """
         fights = self.log_info["fights"]
-        # If logs zone is inside M+ or Torghast include trash pulls
-        if self.get_zone() == "Torghast" or self.get_zone() == "Mythic+":
-            return fights
-        else:
-            fights[:] = [e for e in fights if e.get("boss")]
-            return fights
+        fights[:] = [e for e in fights if e.get("boss")]
+        return fights
 
     def get_fights_amount(self):
         """
@@ -95,13 +91,11 @@ class WarcraftlogsAPI():
         NEXT_RAID = 29...
         """
         zone = self.log_info["zone"]
-        if zone == 25:
-            return "Mythic+"
-        elif zone == 26:
+        if zone == 26:
             return "Castle Nathria"
-        elif zone == 27:
-            return "Torghast"
         elif zone == 28:
             return "Sanctum of Domination"
         elif zone == 29:
             return "Future raid..."
+        else:
+            return None

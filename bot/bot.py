@@ -34,7 +34,9 @@ async def on_message(message):
         return
 
     if message.content.startswith(URL_PREFIX):
-        msg = await message.channel.send(embed=EmbedLogsMesage(title="Test", url=message.content).create())
+        msg = await message.channel.send(embed=EmbedLogsMesage(url=message.content).create())
         await msg.add_reaction(u"✅")
         await msg.add_reaction(u"❎")
         await msg.add_reaction(u"📧")
+
+# TODO ADD REACTION HANDLING
