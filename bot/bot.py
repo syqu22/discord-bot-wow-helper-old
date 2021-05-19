@@ -1,8 +1,12 @@
 import discord
+from discord.ext import commands
 import logging
+
 from bot.embed_logs import EmbedLogsMesage
 
-URL_PREFIX = "https://www.warcraftlogs.com/reports/"
+ACTIVITY_MESSAGE = "?help - Bot"
+DESCRIPTION = "Example bot help me"
+COMMAND_PREFIX = "?"
 
 # Set up logger
 logger = logging.getLogger("discord")
@@ -13,30 +17,46 @@ handler.setFormatter(logging.Formatter(
     "%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)
 
-client = discord.Client()
-
-# Get private discord token from file
+# Create bot
+bot = commands.Bot(activity=discord.Game(
+    ACTIVITY_MESSAGE), command_prefix=COMMAND_PREFIX, description=DESCRIPTION)
 
 
 def get_token():
+    """
+    Get private discord token from file
+    """
     with open("token.txt", "r") as f:
         return f.readline().strip()
 
 
-@client.event
+@bot.event
 async def on_ready():
-    logger.info("Bot logged in as {0.user}".format(client))
+    logger.info(f"Bot logged in as {bot.user}")
+    print(f"Bot logged in as {bot.user}")
 
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
-        return
+    """
+    Handle warcraftlogs link
+    """
+    url_prefix = "https://www.warcraftlogs.com/reports/"
 
-    if message.content.startswith(URL_PREFIX):
-        msg = await message.channel.send(embed=EmbedLogsMesage(url=message.content).create())
-        await msg.add_reaction(u"✅")
-        await msg.add_reaction(u"❎")
-        await msg.add_reaction(u"📧")
+    if message.content.startswith(url_prefix):
+        await message.channel.send(embed=EmbedLogsMesage(url=message.content).create())
+        # await msg.add_reaction(u"✅")
+        # await msg.add_reaction(u"❎")
+        # await msg.add_reaction(u"📧")
+    else:
+        await bot.process_commands(message)
 
-# TODO ADD REACTION HANDLING
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send(f"pong")
+
+
+@bot.command()
+async def affix(ctx):
+    await ctx.send(f"")

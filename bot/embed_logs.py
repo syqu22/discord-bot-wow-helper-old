@@ -12,12 +12,16 @@ class EmbedLogsMesage():
 
     def create(self):
         code = WarcraftlogsAPI(self.code)
+        # Check if logs zone is not from raid
         if not code.get_zone():
-            return Embed(title="Unsupported Zone", description="We are very sorry but our bot is currently not supporting anything else except raids.")
+            embed = Embed(title="Unsupported Zone",
+                          description="We are very sorry but our bot is currently not supporting anything else except raids.")
+            embed.set_footer(text=datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
+            return embed
         else:
 
             embed_message = {
-                "title": f"{code.get_zone()} - {datetime.fromtimestamp(code.get_total_duration()/1000.0).strftime('%H:%M:%S')} ",
+                "title": f"{code.get_title()} - {datetime.fromtimestamp(code.get_total_duration()/1000.0).strftime('%H:%M:%S')} ",
                 "url": self.url,
                 "color": COLOR,
                 "footer": {
@@ -33,8 +37,8 @@ class EmbedLogsMesage():
             for i in range(code.get_fights_amount()):
                 fight = code.get_fight(i)
                 embed.add_field(name=f"{i+1}. {fight.name} ({fight.difficulty})",
-                                value=f"Health: {fight.bossPercentage} https://www.warcraftlogs.com/reports/{self.code}#fight={fight.id}",
-                                inline=False)
+                                value=f"{fight.bossPercentage} | {datetime.fromtimestamp(fight.duration/1000.0).strftime('%M:%S')} | [Link](https://www.warcraftlogs.com/reports/{self.code}#fight={fight.id})",
+                                inline=True)
 
             return embed
 
