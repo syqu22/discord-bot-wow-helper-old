@@ -3,7 +3,7 @@ This file contains unit tests for the Warcraft Logs API
 """
 import pytest
 import requests
-from warcraftlogs import WarcraftlogsAPI
+from wow.warcraftlogs import WarcraftlogsAPI
 
 
 def test_api_connection():
