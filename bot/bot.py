@@ -19,7 +19,7 @@ logger.addHandler(handler)
 
 # Create bot
 bot = commands.Bot(activity=discord.Game(
-    ACTIVITY_MESSAGE), command_prefix=COMMAND_PREFIX, description=DESCRIPTION)
+    ACTIVITY_MESSAGE), command_prefix=COMMAND_PREFIX, description=DESCRIPTION, help_command=None)
 
 
 def get_token():
@@ -60,3 +60,8 @@ async def ping(ctx):
 @bot.command()
 async def affix(ctx):
     await ctx.send(f"")
+
+
+@bot.command()
+async def help(ctx):
+    await ctx.send(", ".join(str(i) for i in bot.commands))
