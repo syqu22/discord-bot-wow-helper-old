@@ -1,5 +1,5 @@
 import requests
-from fight import Fight
+from wow.fight import Fight
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 CLIENT_KEY = "112af4ad330a251cbdc08faa580f3724"

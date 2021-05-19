@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import logging
 
+from wow.affixes import Affixes
 from bot.embed_logs import EmbedLogsMesage
 
 ACTIVITY_MESSAGE = "?help - Bot"
@@ -58,10 +59,15 @@ async def ping(ctx):
 
 
 @bot.command()
-async def affix(ctx):
-    await ctx.send(f"")
+async def affixes(ctx):
+    affixes = Affixes()
+    # TODO ADD EMBED MESSAGE
+    await ctx.send(affixes.previous)
+    await ctx.send(affixes.current)
+    await ctx.send(affixes.next)
 
 
 @bot.command()
 async def help(ctx):
+    # TODO ADD EMBED MESSAGE
     await ctx.send(", ".join(str(i) for i in bot.commands))

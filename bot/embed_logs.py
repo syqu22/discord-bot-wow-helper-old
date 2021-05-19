@@ -1,6 +1,6 @@
 from datetime import datetime
 from discord.embeds import Embed
-from warcraftlogs import WarcraftlogsAPI
+from wow.warcraftlogs import WarcraftlogsAPI
 
 COLOR = 9066993
 
