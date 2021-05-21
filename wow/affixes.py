@@ -25,28 +25,28 @@ class Affixes:
 
     def __init__(self):
         self.weeks_since_launch = round(
-            self.calculateCurrentWeek()) + FIRST_EU_AFFIX
+            self.calculate_current_week()) + FIRST_EU_AFFIX
 
     @classmethod
-    def calculateCurrentWeek(cls):
+    def calculate_current_week(cls):
         return abs(cls.first_week - datetime.now().timestamp())/(60*60*24*7)
 
-    def currentAffixes(self):
+    def current_affixes(self):
         while self.weeks_since_launch > 12:
             self.weeks_since_launch -= 12
         return ", ".join(self.affixes[self.weeks_since_launch])
 
-    def nextWeekAffixes(self):
+    def next_affixes(self):
         while self.weeks_since_launch + 1 > 12:
             self.weeks_since_launch -= 12
         return ", ".join(self.affixes[self.weeks_since_launch + 1])
 
-    def previousWeekAfixes(self):
+    def previous_affixes(self):
         while self.weeks_since_launch - 1 > 12:
             self.weeks_since_launch -= 12
         return ", ".join(self.affixes[self.weeks_since_launch - 1])
 
-    def affixesFromWeek(self, week: int):
+    def affixes_from_week(self, week: int):
         week += FIRST_EU_AFFIX
         while week > 12:
             week -= 12

@@ -23,16 +23,16 @@ class EmbedAffixesMessage():
         if self.args and self.args[0].isnumeric():
             num = int(self.args[0])
             embed.add_field(name=f"Week {num} affixes",
-                            value=affixes.affixesFromWeek(num))
+                            value=affixes.affixes_from_week()(num))
 
             return embed
 
         else:
             embed.add_field(name="Previous Week Affixes",
-                            value=affixes.previousWeekAfixes())
+                            value=affixes.previous_affixes())
             embed.add_field(name="Current Week Affixes",
-                            value=affixes.currentAffixes())
+                            value=affixes.current_affixes())
             embed.add_field(name="Next Week Affixes",
-                            value=affixes.nextWeekAffixes())
+                            value=affixes.next_affixes()())
 
             return embed

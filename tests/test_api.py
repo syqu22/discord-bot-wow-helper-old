@@ -32,7 +32,7 @@ def test_get_log_info(logs):
     info = logs.get_log_info()
 
     assert info
-    assert type(info) == dict
+    assert isinstance(info, dict)
 
 
 def test_get_title(logs):
@@ -54,7 +54,7 @@ def test_get_characters(logs):
     characters = logs.get_characters()
 
     assert characters
-    assert [type(x) == dict for x in characters]
+    assert [isinstance(x, dict) for x in characters]
     assert [x["id"] and x["name"] and x["region"] and x["server"]
             for x in characters]
     assert next(x for x in characters if x["name"] ==
