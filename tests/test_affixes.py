@@ -1,5 +1,5 @@
 """
-This file contains unit tests for the Affixes Module
+This file contains unit tests for the Affixes class
 """
 import pytest
 from wow.affixes import Affixes

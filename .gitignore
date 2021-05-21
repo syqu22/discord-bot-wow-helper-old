@@ -4,6 +4,9 @@
 #Discord Token
 token.txt
 
+#Blizzard API secret
+secret.txt
+
 #Log file
 .log
 

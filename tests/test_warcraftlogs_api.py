@@ -1,5 +1,5 @@
 """
-This file contains unit tests for the Warcraft Logs API
+This file contains unit tests for the WarcraftLogs and Fight Classes
 """
 import pytest
 import requests
