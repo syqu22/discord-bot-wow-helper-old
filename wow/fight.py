@@ -1,4 +1,4 @@
-class Fight(object):
+class Fight:
     """
     Parameters
     -----------
@@ -19,14 +19,14 @@ class Fight(object):
         difficulty: `int`
             Fight difficulty (Mythic = 5)
         bossPercentage: `str`
-            Boss health in % or an information that the boss died
+            Boss health in % or an information that the boss died `int`
         others: `dict`
             Other parameters like: 
-                - bossPercentage (boss health `int`)
                 - kill (is boss dead or not `bool`)
         """
 
-    def __init__(self, id: int, boss: int, start_time: int, end_time: int, name: str, zoneName: str, **others: dict):
+    # TODO Add __str__
+    def __init__(self, id: int, boss: int, start_time: int, end_time: int, name: str, zoneName: str, difficulty: int, bossPercentage: int, **others: dict):
         self.id = id
         self.boss = boss
         self.start_time = start_time
@@ -35,11 +35,8 @@ class Fight(object):
         self.name = name
         self.zoneName = zoneName
         self.others = others
-        # Check if fight contains every information (m+ logs do not have these)
-        if "difficulty" in self.others:
-            self.difficulty = self.set_difficulty(others["difficulty"])
-            self.bossPercentage = self.set_bossPercentage(
-                others["bossPercentage"])
+        self.difficulty = self.set_difficulty(difficulty)
+        self.bossPercentage = self.set_bossPercentage(bossPercentage)
 
     def set_bossPercentage(self, bossPercentage: int):
         if self.others["kill"] == True:

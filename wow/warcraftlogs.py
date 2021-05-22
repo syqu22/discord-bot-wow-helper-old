@@ -11,15 +11,15 @@ class WarcraftlogsAPI():
         self.log_info = self.get_log_info()
 
     def get_log_info(self):
-        params = {
-            "api_key": CLIENT_KEY,
-            "translate": True
-        }
-        fights = requests.get(API_URL + "fights/" + self.code, params=params)
-
-        if fights.status_code == 200:
+        try:
+            params = {
+                "api_key": CLIENT_KEY,
+                "translate": True
+            }
+            fights = requests.get(API_URL + "fights/" +
+                                  self.code, params=params)
             return fights.json()
-        else:
+        except:
             return None
 
     def get_title(self):
