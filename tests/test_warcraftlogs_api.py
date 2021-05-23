@@ -3,12 +3,13 @@ This file contains unit tests for the WarcraftLogs and Fight Classes
 """
 import pytest
 import requests
+from wow.fight import Fight
 from wow.warcraftlogs import WarcraftlogsAPI
 
 
 def test_api_connection():
     """
-    Do two GET requests to API docs and Warcraftlogs site to check if it is reachable
+    GET requests to API docs and Warcraftlogs site to check if it is reachable
     """
     request = requests.get("https://www.warcraftlogs.com")
     assert request.status_code == 200
@@ -46,21 +47,6 @@ def test_get_title(logs):
     assert title == "Mythic 03/5 Farm"
 
 
-def test_get_characters(logs):
-    """
-    Given the logs fixture
-    Return a list of dicts with every Character
-    """
-    characters = logs.get_characters()
-
-    assert characters
-    assert [isinstance(x, dict) for x in characters]
-    assert [x["id"] and x["name"] and x["region"] and x["server"]
-            for x in characters]
-    assert next(x for x in characters if x["name"] ==
-                "Squy" and "Elibear" and "Loafcake" and "Arioni" and "Lilborn")
-
-
 def test_get_fight(logs):
     """
     Given the logs fixture
@@ -69,6 +55,7 @@ def test_get_fight(logs):
     fight = logs.get_fight(2)
 
     assert fight
+    assert isinstance(fight, Fight)
     assert fight.id == 7
     assert fight.boss == 2417
     assert fight.start_time == 1858600
@@ -92,17 +79,6 @@ def test_get_fights_amount(logs):
     assert fights == 18
 
 
-def test_get_owner(logs):
-    """
-    Given the logs fixture
-    Return the name of logs owner
-    """
-    owner = logs.get_owner()
-
-    assert owner
-    assert owner == "Syqu22"
-
-
 def test_get_zone(logs):
     """
     Given the logs fixture
@@ -112,17 +88,6 @@ def test_get_zone(logs):
 
     assert zone
     assert zone == "Castle Nathria"
-
-
-def test_get_duration(logs):
-    """
-    Given the logs fixture
-    Return a duration of logs that is based on the first and last pull
-    """
-    duration = logs.get_duration()
-
-    assert duration
-    assert duration == 10699851
 
 
 def test_get_total_duration(logs):
