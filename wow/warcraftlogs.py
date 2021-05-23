@@ -24,19 +24,13 @@ class WarcraftlogsAPI():
 
     def get_title(self):
         """
-        Returns the logs title `str`
+        Return the logs title `str`
         """
         return self.log_info["title"]
 
-    def get_characters(self):
-        """
-        Returns a `dict` of characters from logs
-        """
-        return self.log_info["exportedCharacters"]
-
     def get_fight(self, fight_number):
         """
-        Returns the `Fight` object from `list` of fights
+        Return the `Fight` object from `list` of fights
         with the given fight_number
         """
         fight = self.get_fights()[fight_number]
@@ -44,7 +38,7 @@ class WarcraftlogsAPI():
 
     def get_fights(self):
         """
-        Returns `list` of `dict` fights from logs
+        Return `list` of `dict` fights from logs
         (excluding trash and reset pulls if it is raid)
         """
         fights = self.log_info["fights"]
@@ -53,36 +47,22 @@ class WarcraftlogsAPI():
 
     def get_fights_amount(self):
         """
-        Returns the :`int` number of fights
+        Return the :`int` number of fights
         """
         return len(self.get_fights())
-
-    def get_duration(self):
-        """
-        Use for events when you need to check entire logs timeline.
-
-        Returns the `int` duration of logs that is based on the first and last pull
-        """
-        return self.get_fights()[-1]["end_time"]
 
     def get_total_duration(self):
         """
         Use to calculate duration of logs
 
-        Returns the `int` duration of logs that comes from the
+        Return the `int` duration of logs that comes from the
         difference of first and last event
         """
         return abs(self.log_info["start"] - self.log_info["end"])
 
-    def get_owner(self):
-        """
-        Returns the `str` name of the logs owner
-        """
-        return self.log_info["owner"]
-
     def get_zone(self):
         """
-        Returns the name of the logs zone as an `str`
+        Return the name of the logs zone as an `str`
 
         MYTHIC_PLUS = 25
         CASTLE_NATHRIA = 26
@@ -91,8 +71,12 @@ class WarcraftlogsAPI():
         NEXT_RAID = 29...
         """
         zone = self.log_info["zone"]
-        if zone == 26:
+        if zone == 25:
+            return "Mythic+"
+        elif zone == 26:
             return "Castle Nathria"
+        elif zone == 27:
+            return "Torghast"
         elif zone == 28:
             return "Sanctum of Domination"
         elif zone == 29:

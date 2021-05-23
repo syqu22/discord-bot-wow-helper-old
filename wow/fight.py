@@ -19,7 +19,7 @@ class Fight:
         difficulty: `int`
             Fight difficulty (Mythic = 5)
         bossPercentage: `str`
-            Boss health in % or an information that the boss died `int`
+            Boss health in % or an information that the boss died
         others: `dict`
             Other parameters like: 
                 - kill (is boss dead or not `bool`)
@@ -45,18 +45,24 @@ class Fight:
 
     def set_difficulty(self, difficulty: int):
         """
-        1 = LFR
-        3 = Normal
-        4 = Heroic
-        5 = Mythic
+        1  = LFR
+        3  = Normal
+        4  = Heroic
+        5  = Mythic
+        10 = Mythic+
+        20 = Torghast
         """
-        if difficulty == 5:
+        if difficulty == 20:
+            return "Torghast"
+        elif difficulty == 10:
+            return "Mythic+"
+        elif difficulty == 5:
             return "Mythic"
-        if difficulty == 4:
+        elif difficulty == 4:
             return "Heroic"
-        if difficulty == 3:
+        elif difficulty == 3:
             return "Normal"
-        if difficulty == 1:
+        elif difficulty == 1:
             return "LFR"
 
     def set_duration(self):
