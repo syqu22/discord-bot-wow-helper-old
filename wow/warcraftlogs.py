@@ -1,8 +1,8 @@
+import os
 import requests
 from wow.fight import Fight
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
-CLIENT_KEY = "112af4ad330a251cbdc08faa580f3724"
 
 
 class WarcraftlogsAPI():
@@ -13,7 +13,7 @@ class WarcraftlogsAPI():
     def get_log_info(self):
         try:
             params = {
-                "api_key": CLIENT_KEY,
+                "api_key": os.getenv("WARCRAFTLOGS_CLIENT"),
                 "translate": True
             }
             fights = requests.get(API_URL + "fights/" +

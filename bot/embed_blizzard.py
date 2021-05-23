@@ -58,7 +58,7 @@ class EmbedBlizzardMessage():
                 name="Achievements", value=f"[{character.ach_points}]({armory_url + 'achievements'}) points"
             )
             embed.add_field(
-                name="Covenant", value=f"{character.covenant}"
+                name="Covenant", value=f"{character.covenant}",
             )
             embed.add_field(
                 name="Links", value=f"[Raider.IO](https://raider.io/characters/eu/{credentials[1]}/{credentials[0]}) | "

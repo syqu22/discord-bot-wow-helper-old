@@ -1,21 +1,15 @@
+import os
 from wow.character import Character
 from blizzardapi import BlizzardApi
 
-CLIENT_ID = "a30c40f5dba24d53bff5201464f92e8d"
 REGION = "eu"
 LOCALE = "en_GB"
 
 
 class BlizzardAPI():
     def __init__(self):
-        self.api = BlizzardApi(CLIENT_ID, self.get_secret())
-
-    def get_secret(self):
-        """
-        Return the secret key `str` from secret.txt file's first line
-        """
-        with open("secret.txt") as f:
-            return f.readline().strip()
+        self.api = BlizzardApi(os.getenv("BLIZZARD_CLIENT"),
+                               os.getenv("BLIZZARD_SECRET"))
 
     def wow_token(self):
         """

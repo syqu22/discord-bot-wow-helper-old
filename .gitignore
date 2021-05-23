@@ -4,12 +4,6 @@ cache.sqlite
 #Visual Studio Code
 .vscode
 
-#Discord Token
-token.txt
-
-#Blizzard API secret
-secret.txt
-
 #Log file
 .log
 

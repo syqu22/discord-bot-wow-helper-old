@@ -1,7 +1,6 @@
-from bot.embed_blizzard import EmbedBlizzardMessage
 import discord
-from discord.ext import commands
 import logging
+from discord.ext import commands
 
 from bot.embed_logs import EmbedLogsMesage
 from bot.embed_affixes import EmbedAffixesMessage
@@ -10,6 +9,7 @@ from bot.embed_blizzard import EmbedBlizzardMessage
 ACTIVITY_MESSAGE = "?help - Bot"
 DESCRIPTION = "Example bot help me"
 COMMAND_PREFIX = "?"
+
 
 # Set up logger
 _logger = logging.getLogger("discord")
@@ -22,14 +22,6 @@ _logger.addHandler(handler)
 # Create bot
 bot = commands.Bot(activity=discord.Game(
     ACTIVITY_MESSAGE), command_prefix=COMMAND_PREFIX, description=DESCRIPTION)
-
-
-def get_token():
-    """
-    Get private discord token from file
-    """
-    with open("token.txt", "r") as f:
-        return f.readline().strip()
 
 
 @bot.event
