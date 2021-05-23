@@ -3,8 +3,6 @@ from discord.embeds import Embed
 from wow.affixes import Affixes
 import logging
 
-COLOR = 2075661
-
 _logger = logging.getLogger("discord")
 
 
@@ -15,7 +13,7 @@ class EmbedAffixesMessage():
     def create(self):
         embed_message = {
             "title": "Affixes",
-            "color": COLOR,
+            "color": 2075661,
             "footer": {
                 "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
             },
