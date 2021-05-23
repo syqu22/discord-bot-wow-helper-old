@@ -25,7 +25,6 @@ class Fight:
                 - kill (is boss dead or not `bool`)
         """
 
-    # TODO Add __str__
     def __init__(self, id: int, boss: int, start_time: int, end_time: int, name: str, zoneName: str, difficulty: int, bossPercentage: int, **others: dict):
         self.id = id
         self.boss = boss
@@ -62,3 +61,6 @@ class Fight:
 
     def set_duration(self):
         return abs(self.start_time - self.end_time)
+
+    def __str__(self):
+        return f"{self.id} - {self.name} {self.duration} {self.difficulty} {self.bossPercentage}"
