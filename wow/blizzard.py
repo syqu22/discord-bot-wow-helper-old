@@ -1,7 +1,5 @@
 from wow.character import Character
 from blizzardapi import BlizzardApi
-from datetime import datetime
-
 
 CLIENT_ID = "a30c40f5dba24d53bff5201464f92e8d"
 REGION = "eu"
@@ -20,10 +18,9 @@ class BlizzardAPI():
     def wow_token(self):
         try:
             api = self.api.wow.game_data.get_token_index(REGION, LOCALE)
-            time = datetime.fromtimestamp(api["last_updated_timestamp"] / 1000)
-            price = api["price"] / 10
+            price = api["price"] / 10000
 
-            return {"price": price, "time": time}
+            return int(price)
         except:
             return None
 

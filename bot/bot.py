@@ -1,22 +1,23 @@
+from bot.embed_blizzard import EmbedBlizzardMessage
 import discord
 from discord.ext import commands
 import logging
 
 from bot.embed_logs import EmbedLogsMesage
 from bot.embed_affixes import EmbedAffixesMessage
+from bot.embed_blizzard import EmbedBlizzardMessage
 
 ACTIVITY_MESSAGE = "?help - Bot"
 DESCRIPTION = "Example bot help me"
 COMMAND_PREFIX = "?"
 
 # Set up logger
-logger = logging.getLogger("discord")
-logger.setLevel(logging.DEBUG)
+_logger = logging.getLogger("discord")
 handler = logging.FileHandler(
     filename="logs/discord.log", encoding="utf-8", mode="w")
 handler.setFormatter(logging.Formatter(
     "%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-logger.addHandler(handler)
+_logger.addHandler(handler)
 
 # Create bot
 bot = commands.Bot(activity=discord.Game(
@@ -33,7 +34,7 @@ def get_token():
 
 @bot.event
 async def on_ready():
-    logger.info(f"Bot logged in as {bot.user}")
+    _logger.info(f"Bot logged in as {bot.user}")
     print(f"Bot logged in as {bot.user}")
 
 
@@ -58,3 +59,13 @@ async def ping(ctx):
 @bot.command()
 async def affixes(ctx, *args):
     await ctx.send(embed=EmbedAffixesMessage(args).create())
+
+
+@bot.command()
+async def token(ctx):
+    await ctx.send(embed=EmbedBlizzardMessage().create_token())
+
+
+@bot.command()
+async def character(ctx, *args):
+    await ctx.send(embed=EmbedBlizzardMessage().create_character(args))
