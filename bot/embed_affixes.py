@@ -1,8 +1,11 @@
 from datetime import datetime
 from discord.embeds import Embed
 from wow.affixes import Affixes
+import logging
 
 COLOR = 2075661
+
+_logger = logging.getLogger("discord")
 
 
 class EmbedAffixesMessage():
@@ -20,19 +23,23 @@ class EmbedAffixesMessage():
         embed = Embed.from_dict(embed_message)
         affixes = Affixes()
 
-        if self.args and self.args[0].isnumeric():
-            num = int(self.args[0])
-            embed.add_field(name=f"Week {num} affixes",
-                            value=affixes.affixes_from_week()(num))
+        try:
+            if self.args and int(self.args[0]) < 100:
+                num = int(self.args[0])
+                embed.add_field(name=f"Week {num} affixes",
+                                value=affixes.affixes_from_week(num))
 
-            return embed
+                return embed
+            else:
+                embed.add_field(name=f"Previous Week {affixes.weeks_since_launch-1} Affixes",
+                                value=affixes.previous_affixes())
+                embed.add_field(name=f"Current Week {affixes.weeks_since_launch} Affixes",
+                                value=affixes.current_affixes())
+                embed.add_field(name=f"Next Week {affixes.weeks_since_launch+1}Affixes",
+                                value=affixes.next_affixes())
 
-        else:
-            embed.add_field(name="Previous Week Affixes",
-                            value=affixes.previous_affixes())
-            embed.add_field(name="Current Week Affixes",
-                            value=affixes.current_affixes())
-            embed.add_field(name="Next Week Affixes",
-                            value=affixes.next_affixes()())
-
-            return embed
+                return embed
+        except:
+            _logger.error(
+                f"Affixes command with additional parameters {self.args} returned error")
+            return Embed(title="Wrong week", description="Make sure given week is smaller than 100 and the command is correct \n Example: ?affixes <week>")

@@ -1,8 +1,11 @@
 from datetime import datetime
 from discord.embeds import Embed
 from wow.warcraftlogs import WarcraftlogsAPI
+import logging
 
 COLOR = 9066993
+
+_logger = logging.getLogger("discord")
 
 
 class EmbedLogsMesage():
@@ -12,13 +15,7 @@ class EmbedLogsMesage():
 
     def create(self):
         code = WarcraftlogsAPI(self.code)
-        # Check if logs zone is not from raid
-        if not code.get_zone():
-            embed = Embed(title="Unsupported Zone",
-                          description="We are very sorry but our bot is currently not supporting anything else except raids.")
-            embed.set_footer(text=datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-            return embed
-        else:
+        try:
 
             embed_message = {
                 "title": f"{code.get_title()} - {datetime.fromtimestamp(code.get_total_duration()/1000.0).strftime('%H:%M:%S')} ",
@@ -41,6 +38,10 @@ class EmbedLogsMesage():
                                 inline=True)
 
             return embed
+        except:
+            _logger.error(f"Log with url {self.url} returned error")
+            return Embed(title="Log error",
+                         description="Make sure the link is correct (remember that bot currently does not support Mythic+ and Torghast")
 
 
 def zone_image(logs: WarcraftlogsAPI):
