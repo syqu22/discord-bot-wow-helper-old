@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  discordbotwowhelper:
+    image: discordbotwowhelper
+    environment:
+      - BLIZZARD_CLIENT=${BLIZZARD_CLIENT}
+      - BLIZZARD_SECRET=${BLIZZARD_SECRET}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - WARCRAFTLOGS_CLIENT=${WARCRAFTLOGS_CLIENT}
+        
+    build:
+      context: .
+      dockerfile: ./Dockerfile
