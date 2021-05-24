@@ -4,7 +4,7 @@ This file contains unit tests for the Blizzard and Character classes
 import pytest
 import requests
 from wow.character import Character
-from wow.blizzard import BlizzardAPI
+from wow.blizzard import BlizzardAPI, REGIONS
 
 
 def test_api_connection():
@@ -43,10 +43,12 @@ def test_wow_token(blizzard):
     Given the blizzard fixture
     Return the price of wow token as int
     """
-    token = blizzard.wow_token()
+    tokens = blizzard.wow_token()
 
-    assert token
-    assert isinstance(token, int)
+    assert tokens
+    assert isinstance(tokens, dict)
+    for region in tokens.keys():
+        assert region in REGIONS
 
 
 def test_character_info_api(blizzard):

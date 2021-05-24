@@ -9,5 +9,5 @@ load_dotenv()
 
 if __name__ == "__main__":
     # Add cache to API requests
-    install_cache("cache", expire_after=300)
+    install_cache("cache", expire_after=1800)
     bot.bot.run(os.getenv("DISCORD_TOKEN"))
