@@ -12,9 +12,8 @@ class EmbedLogsMesage():
         self.code = url[37:53]
 
     def create(self):
-        code = WarcraftlogsAPI(self.code)
         try:
-
+            code = WarcraftlogsAPI(self.code)
             embed_message = {
                 "title": f"{code.get_title()} - {datetime.fromtimestamp(code.get_total_duration()/1000.0).strftime('%H:%M:%S')} ",
                 "url": self.url,

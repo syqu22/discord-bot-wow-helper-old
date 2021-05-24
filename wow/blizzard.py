@@ -2,7 +2,7 @@ import os
 from wow.character import Character
 from blizzardapi import BlizzardApi
 
-REGION = "eu"
+REGIONS = ["eu", "us", "kr", "tw", "cn"]
 LOCALE = "en_GB"
 
 
@@ -13,13 +13,17 @@ class BlizzardAPI():
 
     def wow_token(self):
         """
-        Return the price `int` of the EU Wow token
+        Return the price `int` of the EU WoW token
         """
         try:
-            api = self.api.wow.game_data.get_token_index(REGION, LOCALE)
-            price = api["price"] / 10000
+            api = self.api.wow.game_data
+            token_prices = dict()
 
-            return int(price)
+            for region in REGIONS:
+                token_prices[region] = int(api.get_token_index(
+                    region, LOCALE)["price"]) / 10000
+
+            return token_prices
         except:
             return None
 
@@ -30,7 +34,7 @@ class BlizzardAPI():
         try:
             api = self.api.wow.profile
             character = api.get_character_profile_summary(
-                REGION, LOCALE, realm.lower(), name.lower())
+                REGIONS[0], LOCALE, realm.lower(), name.lower())
 
             return Character(**character)
         except:
@@ -43,7 +47,7 @@ class BlizzardAPI():
         try:
             api = self.api.wow.profile
             avatar = api.get_character_media_summary(
-                REGION, LOCALE, realm.lower(), name.lower())
+                REGIONS[0], LOCALE, realm.lower(), name.lower())
 
             return avatar["assets"][1]["value"]
         except:

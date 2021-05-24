@@ -7,24 +7,20 @@ _logger = logging.getLogger("discord")
 
 
 class EmbedAffixesMessage():
-    def __init__(self, args):
-        self.args = args
-
-    def create(self):
-        embed_message = {
-            "title": "Affixes",
-            "color": 2075661,
-            "footer": {
-                "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            },
-        }
-        embed = Embed.from_dict(embed_message)
-        affixes = Affixes()
-
+    def create(self, week: int):
         try:
-            if self.args and int(self.args[0]) < 100:
-                num = int(self.args[0])
-                embed.add_field(name=f"Week {num} affixes",
+            affixes = Affixes()
+            embed_message = {
+                "title": "Affixes",
+                "color": 2075661,
+                "footer": {
+                    "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+                },
+            }
+            embed = Embed.from_dict(embed_message)
+            if week:
+                num = int(week)
+                embed.add_field(name=f"Week {num} Affixes",
                                 value=affixes.affixes_from_week(num))
 
                 return embed
@@ -39,5 +35,5 @@ class EmbedAffixesMessage():
                 return embed
         except:
             _logger.error(
-                f"Affixes command with additional parameters {self.args} returned error")
+                f"Affixes command with additional parameters {week} returned error")
             return Embed(title="Wrong week", description="Make sure given week is smaller than 100 and the command is correct \n Example: ?affixes <week>")
