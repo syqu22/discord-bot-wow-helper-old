@@ -29,11 +29,11 @@ class EmbedAffixesMessage():
                                 value=affixes.previous_affixes())
                 embed.add_field(name=f"Current Week {affixes.weeks_since_launch} Affixes",
                                 value=affixes.current_affixes())
-                embed.add_field(name=f"Next Week {affixes.weeks_since_launch+1}Affixes",
+                embed.add_field(name=f"Next Week {affixes.weeks_since_launch+1} Affixes",
                                 value=affixes.next_affixes())
 
                 return embed
         except:
             _logger.error(
                 f"Affixes command with additional parameters {week} returned error")
-            return Embed(title="Wrong week", description="Make sure given week is smaller than 100 and the command is correct \n Example: ?affixes <week>")
+            return Embed(title="Wrong week", description="Make sure the command is correct \n Example: ?affixes <week>")

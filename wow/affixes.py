@@ -1,9 +1,9 @@
 from datetime import datetime
 
 # H:M d-m-y
-FIRST_WEEK = "8:00 8-12-2020"
+FIRST_WEEK = "8:00 9-12-2020"
 # First week of EU
-FIRST_EU_AFFIX = 4
+FIRST_AFFIX = 3
 
 
 class Affixes:
@@ -27,7 +27,7 @@ class Affixes:
 
     def __init__(self):
         self.weeks_since_launch = round(
-            self.calculate_current_week()) + FIRST_EU_AFFIX
+            self.calculate_current_week())
 
     @classmethod
     def calculate_current_week(cls):
@@ -40,7 +40,7 @@ class Affixes:
         """
         Return affixes `str` from on current week
         """
-        week = self.weeks_since_launch
+        week = self.weeks_since_launch + FIRST_AFFIX
         while week > 12:
             week -= 12
         return ", ".join(self.affixes[week])
@@ -49,7 +49,7 @@ class Affixes:
         """
         Return affixes `str` from on next week
         """
-        week = self.weeks_since_launch
+        week = self.weeks_since_launch + FIRST_AFFIX
         while week + 1 > 12:
             week -= 12
         return ", ".join(self.affixes[week + 1])
@@ -58,7 +58,7 @@ class Affixes:
         """
         Return affixes `str` from previous week
         """
-        week = self.weeks_since_launch
+        week = self.weeks_since_launch + FIRST_AFFIX
         while week - 1 > 12:
             week -= 12
         return ", ".join(self.affixes[week - 1])
@@ -67,7 +67,7 @@ class Affixes:
         """
         Return affixes `str` from given week
         """
-        week += FIRST_EU_AFFIX
+        week += FIRST_AFFIX
         while week > 12:
             week -= 12
         return ", ".join(self.affixes[week])
