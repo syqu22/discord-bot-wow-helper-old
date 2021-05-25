@@ -2,6 +2,8 @@ import discord
 import logging
 from discord.ext import commands
 
+from wow.blizzard import BlizzardAPI
+
 from bot.embed_logs import EmbedLogsMesage
 from bot.embed_affixes import EmbedAffixesMessage
 from bot.embed_blizzard import EmbedBlizzardMessage
@@ -12,6 +14,7 @@ COMMAND_PREFIX = "?"
 
 # Set up logger
 _logger = logging.getLogger("discord")
+_logger.setLevel(logging.INFO)
 handler = logging.FileHandler(
     filename="logs/discord.log", encoding="utf-8", mode="w")
 handler.setFormatter(logging.Formatter(
@@ -27,6 +30,8 @@ bot = commands.Bot(activity=discord.Game(
 async def on_ready():
     _logger.info(f"Bot logged in as {bot.user}")
     print(f"Bot logged in as {bot.user}")
+    # Start fetching wowtoken data task
+    BlizzardAPI().fetch_wow_token_prices.start()
 
 
 @bot.command(description="Pong?")
