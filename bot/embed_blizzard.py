@@ -18,7 +18,7 @@ class EmbedBlizzardMessage():
                 },
             }
             embed = Embed.from_dict(embed_message)
-            tokens = blizzard.wow_token()
+            tokens = blizzard.get_wow_token_prices()
             for region, price in tokens.items():
                 embed.add_field(
                     name=region.upper(), value="**{0:,}k** Gold".format(int(price)))

@@ -61,7 +61,10 @@ class Affixes:
         week = self.weeks_since_launch + FIRST_AFFIX
         while week - 1 > 12:
             week -= 12
-        return ", ".join(self.affixes[week - 1])
+        if week - 1 < 1:
+            return "No affixes"
+        else:
+            return ", ".join(self.affixes[week - 1])
 
     def affixes_from_week(self, week: int):
         """
@@ -70,4 +73,7 @@ class Affixes:
         week += FIRST_AFFIX
         while week > 12:
             week -= 12
-        return ", ".join(self.affixes[week])
+        if week < 1:
+            return "No affixes"
+        else:
+            return ", ".join(self.affixes[week])

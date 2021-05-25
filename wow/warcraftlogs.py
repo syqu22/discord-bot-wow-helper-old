@@ -1,6 +1,9 @@
 import os
 import requests
 from wow.fight import Fight
+import logging
+
+_logger = logging.getLogger("discord")
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 
@@ -20,6 +23,8 @@ class WarcraftlogsAPI():
                                   self.code, params=params)
             return fights.json()
         except:
+            _logger.error(
+                f"There was an error while getting logs info with {self.code} code")
             return None
 
     def get_title(self):
