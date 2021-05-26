@@ -34,7 +34,7 @@ class Affixes:
         """
         Return current week of the season `int`
         """
-        return abs(cls.first_week - datetime.now().timestamp())/(60*60*24*7)
+        return abs(cls.first_week - datetime.now().timestamp())/(60*60*24*7) + 1
 
     def current_affixes(self):
         """
