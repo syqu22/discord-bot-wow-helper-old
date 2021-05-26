@@ -22,9 +22,9 @@ Technology I have used:
 - ?affixes [week] - Check for current/future/previous or any other given week affixes
 - ?token - Check the current price of WoW token
 
-## [Invite Link](https://discord.com/api/oauth2/authorize?client_id=842687783523844149&permissions=67584&scope=bot)
+## [Invite Bot to your server](https://discord.com/api/oauth2/authorize?client_id=842687783523844149&permissions=67584&scope=bot)
 
-## Screenshoots
+## Screenshots
 
 `?affixes`
 
