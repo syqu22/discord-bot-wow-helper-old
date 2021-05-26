@@ -2,7 +2,7 @@ import os
 from wow.character import Character
 from blizzardapi import BlizzardApi
 from discord.ext import tasks
-from bot.bot import logging
+import logging
 
 _logger = logging.getLogger("discord")
 

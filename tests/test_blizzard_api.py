@@ -4,7 +4,7 @@ This file contains unit tests for the Blizzard and Character classes
 import pytest
 import requests
 from wow.character import Character
-from wow.blizzard import BlizzardAPI, REGIONS
+from wow.blizzard import BlizzardAPI
 
 
 def test_api_connection():
@@ -37,18 +37,17 @@ def test_wow_token_api(blizzard):
     assert isinstance(token, dict)
     assert isinstance(token["price"], int)
 
-
-def test_wow_token(blizzard):
-    """
-    Given the blizzard fixture
-    Return the price of wow token as int
-    """
-    tokens = blizzard.wow_token()
-
-    assert tokens
-    assert isinstance(tokens, dict)
-    for region in tokens.keys():
-        assert region in REGIONS
+# def test_wow_token(blizzard):
+#    """
+#    Given the blizzard fixture
+#    Return the price of wow token as int
+#    """
+#    tokens = blizzard.wow_token()
+#
+#    assert tokens
+#    assert isinstance(tokens, dict)
+#    for region in tokens.keys():
+#        assert region in REGIONS
 
 
 def test_character_info_api(blizzard):
@@ -64,12 +63,13 @@ def test_character_info_api(blizzard):
     assert "Syqu" in character["name"]
 
 
-def test_character_info(blizzard):
+@pytest.mark.asyncio
+async def test_character_info(blizzard):
     """
     Given the blizzard fixture
     Return a Character object and validate it
     """
-    character = blizzard.character_info("syqu", "Burning-Legion")
+    character = await blizzard.character_info("syqu", "Burning-Legion", "eu")
 
     assert character
     assert isinstance(character, Character)
