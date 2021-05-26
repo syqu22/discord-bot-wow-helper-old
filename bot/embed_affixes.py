@@ -7,7 +7,7 @@ _logger = logging.getLogger("discord")
 
 
 class EmbedAffixesMessage():
-    def create(self, week: int):
+    async def create(self, week: int):
         try:
             affixes = Affixes()
             embed_message = {

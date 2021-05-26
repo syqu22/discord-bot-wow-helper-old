@@ -40,32 +40,40 @@ class BlizzardAPI():
         """
         return token_prices
 
-    async def character_info(self, name: str, realm: str):
+    async def character_info(self, name: str, realm: str, region: str):
         """
         Return the `Character` object from Blizzard API `dict`
         """
         try:
             api = self.api.wow.profile
+
+            # If given region is not correct or not set,, use default EU
+            if region not in REGIONS:
+                region = REGIONS[0]
+
             character = api.get_character_profile_summary(
-                REGIONS[0], LOCALE, realm.lower(), name.lower())
+                region, LOCALE, realm.lower(), name.lower())
 
             return Character(**character)
         except:
             _logger.error(
-                f"There was an error while getting character info with {name}-{realm} credentials")
+                f"There was an error while getting character info with {name}-{realm} credentials and region {region}")
             return None
 
-    async def character_avatar(self, name: str, realm: str):
+    async def character_avatar(self, name: str, realm: str, region: str):
         """
         Return the url `str` to the picture of character
         """
         try:
+            # If given region is not correct or not set, use default EU
+            if region not in REGIONS:
+                region = REGIONS[0]
             api = self.api.wow.profile
             avatar = api.get_character_media_summary(
-                REGIONS[0], LOCALE, realm.lower(), name.lower())
+                region, LOCALE, realm.lower(), name.lower())
 
             return avatar["assets"][1]["value"]
         except:
             _logger.error(
-                f"There was an error while getting character avatar with {name}-{realm} credentials")
+                f"There was an error while getting character avatar for {name}-{realm}")
             return None

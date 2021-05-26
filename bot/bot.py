@@ -36,7 +36,7 @@ async def on_ready():
 
 @bot.command(description="Pong?")
 async def ping(ctx):
-    await ctx.send(f"Pong!")
+    await ctx.channel.send(f"Pong!")
 
 
 @bot.command(brief="Shows fights from WarcraftLogs log", description="Shows fights from WarcraftLogs log as a list with clickable link to each fight. It's also showing the health of boss, "
@@ -50,15 +50,15 @@ async def log(ctx, url: str):
 @bot.command(brief="Shows up to date affixes", description="Shows affixes for previous/current/next week. Can also show affixes for the week user wants"
              " by adding additional parameter [week], which will return affixes for that week.")
 async def affixes(ctx, week: int = None):
-    await ctx.send(embed=EmbedAffixesMessage().create(week))
+    await ctx.channel.send(embed=await EmbedAffixesMessage().create(week=week))
 
 
 @bot.command(brief="Shows current price of the WoW token", description="Shows current price of the WoW token, data is taken from EU, US, KR, TW and CN regions.")
 async def token(ctx):
-    await ctx.send(embed=await EmbedBlizzardMessage().create_token())
+    await ctx.channel.send(embed=await EmbedBlizzardMessage().create_token())
 
 
 @bot.command(brief="Shows information about given character", description="Shows information about given character. Make sure character name and realm"
-             "are written correctly in format <name>-<realm> (capitalization is not needed). Currently links related to Blizzard armory only work for EU.")
-async def character(ctx, name_realm: str):
-    await ctx.send(embed=await EmbedBlizzardMessage().create_character(name_realm))
+             "are written correctly in format <name>-<realm> [region] (capitalization is not neccessary). By default region is set to EU.")
+async def character(ctx, name_realm: str, region: str = None):
+    await ctx.channel.send(embed=await EmbedBlizzardMessage().create_character(name_realm=name_realm, region=region))
