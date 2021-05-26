@@ -7,7 +7,7 @@ _logger = logging.getLogger("discord")
 
 
 class EmbedBlizzardMessage():
-    def create_token(self):
+    async def create_token(self):
         try:
             blizzard = BlizzardAPI()
             embed_message = {
@@ -18,7 +18,7 @@ class EmbedBlizzardMessage():
                 },
             }
             embed = Embed.from_dict(embed_message)
-            tokens = blizzard.get_wow_token_prices()
+            tokens = await blizzard.get_wow_token_prices()
             for region, price in tokens.items():
                 embed.add_field(
                     name=region.upper(), value="**{0:,}k** Gold".format(int(price)))
@@ -28,11 +28,11 @@ class EmbedBlizzardMessage():
             _logger.error(f"Token info not found")
             return Embed(title="WoW Token", description="Token info not found")
 
-    def create_character(self, name_realm: str):
+    async def create_character(self, name_realm: str):
         try:
             # credentials[0] = Name, credentials[1] = Realm
             credentials = name_realm.split("-", 1)
-            character = BlizzardAPI().character_info(
+            character = await BlizzardAPI().character_info(
                 credentials[0], credentials[1])
             armory_url = f"https://worldofwarcraft.com/en-gb/character/eu/{credentials[1]}/{credentials[0]}/"
 
@@ -44,7 +44,7 @@ class EmbedBlizzardMessage():
                     "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
                 },
                 "image": {
-                    "url": BlizzardAPI().character_avatar(credentials[0], credentials[1])
+                    "url": await BlizzardAPI().character_avatar(credentials[0], credentials[1])
                 }
             }
             embed = Embed.from_dict(embed_message)

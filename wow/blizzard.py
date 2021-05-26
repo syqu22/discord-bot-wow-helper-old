@@ -34,13 +34,13 @@ class BlizzardAPI():
                 "There was an error during fetching WoW token prices data")
             return None
 
-    def get_wow_token_prices(self):
+    async def get_wow_token_prices(self):
         """
         Return the price `int` of the EU WoW token
         """
         return token_prices
 
-    def character_info(self, name: str, realm: str):
+    async def character_info(self, name: str, realm: str):
         """
         Return the `Character` object from Blizzard API `dict`
         """
@@ -55,7 +55,7 @@ class BlizzardAPI():
                 f"There was an error while getting character info with {name}-{realm} credentials")
             return None
 
-    def character_avatar(self, name: str, realm: str):
+    async def character_avatar(self, name: str, realm: str):
         """
         Return the url `str` to the picture of character
         """

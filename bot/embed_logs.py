@@ -37,7 +37,7 @@ class EmbedLogsMesage():
         except:
             _logger.error(f"Log with url {self.url} returned error")
             return Embed(title="Log error",
-                         description="Wrong link to logs")
+                         description="Wrong link or logs are set to private.")
 
 
 async def zone_image(logs: WarcraftlogsAPI):

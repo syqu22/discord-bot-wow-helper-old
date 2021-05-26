@@ -55,10 +55,10 @@ async def affixes(ctx, week: int = None):
 
 @bot.command(brief="Shows current price of the WoW token", description="Shows current price of the WoW token, data is taken from EU, US, KR, TW and CN regions.")
 async def token(ctx):
-    await ctx.send(embed=EmbedBlizzardMessage().create_token())
+    await ctx.send(embed=await EmbedBlizzardMessage().create_token())
 
 
 @bot.command(brief="Shows information about given character", description="Shows information about given character. Make sure character name and realm"
              "are written correctly in format <name>-<realm> (capitalization is not needed). Currently links related to Blizzard armory only work for EU.")
 async def character(ctx, name_realm: str):
-    await ctx.send(embed=EmbedBlizzardMessage().create_character(name_realm))
+    await ctx.send(embed=await EmbedBlizzardMessage().create_character(name_realm))
