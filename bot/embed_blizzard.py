@@ -35,6 +35,11 @@ class EmbedBlizzardMessage():
             credentials = name_realm.split("-", 1)
             character = await api.character_info(
                 credentials[0], credentials[1], region)
+
+            # Make region EU
+            if region == None:
+                region = "eu"
+
             armory_url = f"https://worldofwarcraft.com/en-gb/character/{region}/{credentials[1]}/{credentials[0]}/"
 
             embed_message = {
@@ -59,8 +64,8 @@ class EmbedBlizzardMessage():
             )
             embed.add_field(
                 name="Links", value=f"[Raider.IO](https://raider.io/characters/{region}/{credentials[1]}/{credentials[0]}) | "
-                "[WarcraftLogs](https://www.warcraftlogs.com/character/{region}/{credentials[1]}/{credentials[0]}) | "
-                "[WoWProgress](https://www.wowprogress.com/character/{region}/{credentials[1]}/{credentials[0]})"
+                f"[WarcraftLogs](https://www.warcraftlogs.com/character/{region}/{credentials[1]}/{credentials[0]}) | "
+                f"[WoWProgress](https://www.wowprogress.com/character/{region}/{credentials[1]}/{credentials[0]})"
             )
             embed.add_field(
                 name="Covenant", value=f"{character.covenant}",
