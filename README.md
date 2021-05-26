@@ -1,10 +1,12 @@
 
 
-# flask-pastebin
+# discord-bot-wow-helper
 
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/avatar.png" height=50% width=60%>
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/avatar.png" height=20% width=30%>
 
 Discord bot based on [discord.py](https://discordpy.readthedocs.io/en/stable/) written in Python.
+
+#
 
 Technology I have used:
 - `discord.py` for easier and better usage of Discord API
@@ -21,12 +23,30 @@ Technology I have used:
 - ?token - Check the current price of WoW token
 
 ## [Invite Link](https://discord.com/api/oauth2/authorize?client_id=842687783523844149&permissions=67584&scope=bot)
-## Screenshots
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/affixes_1_command.png" height=50% width=60%>
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/affixes_2_command.png" height=50% width=60%>
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/character_command.png" height=50% width=60%>
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/logs_command.png" height=50% width=60%>
-<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/main/img/token_command.png" height=50% width=60%>
+#
+## Screenshoots
+
+`?affixes`
+
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/affixes_1_command.png" height=50% width=60%>
+
+`?affixes [optional week]`
+
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/affixes_2_command.png" height=30% width=50%>
+
+`?character <character name>-<realm> [optional region]`
+
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/character_command.png" height=45% width=50%>
+
+`?log <link to logs>`
+
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/logs_command.png" height=45% width=50%>
+
+`?token`
+
+<img src="https://github.com/syqu22/discord-bot-wow-helper/blob/master/img/token_command.png" height=30% width=50%>
+
+#
 
 ## Installation 
 
