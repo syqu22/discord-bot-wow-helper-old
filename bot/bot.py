@@ -31,7 +31,7 @@ async def on_ready():
     _logger.info(f"Bot logged in as {bot.user}")
     print(f"Bot logged in as {bot.user}")
     # Start fetching wowtoken data task
-    BlizzardAPI().fetch_wow_token_prices.start()
+    await BlizzardAPI().fetch_wow_token_prices.start()
 
 
 @bot.command(description="Pong?")
@@ -44,7 +44,7 @@ async def ping(ctx):
 async def log(ctx, url: str):
     url_prefix = "https://www.warcraftlogs.com/reports/"
     if url.startswith(url_prefix):
-        await ctx.channel.send(embed=EmbedLogsMesage(url=url).create())
+        await ctx.channel.send(embed=await EmbedLogsMesage(url=url).create())
 
 
 @bot.command(brief="Shows up to date affixes", description="Shows affixes for previous/current/next week. Can also show affixes for the week user wants"

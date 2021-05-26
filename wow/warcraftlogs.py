@@ -1,71 +1,74 @@
 import os
-import requests
-from wow.fight import Fight
+import aiohttp
 import logging
+from wow.fight import Fight
+from asyncinit import asyncinit
 
 _logger = logging.getLogger("discord")
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 
 
+@asyncinit
 class WarcraftlogsAPI():
-    def __init__(self, code: str):
+    async def __init__(self, code: str):
         self.code = code
-        self.log_info = self.get_log_info()
+        self.log_info = await self.get_log_info()
 
-    def get_log_info(self):
+    async def get_log_info(self):
         try:
-            params = {
-                "api_key": os.getenv("WARCRAFTLOGS_CLIENT"),
-                "translate": True
-            }
-            fights = requests.get(API_URL + "fights/" +
-                                  self.code, params=params)
-            return fights.json()
+            async with aiohttp.ClientSession() as session:
+                params = {
+                    "api_key": os.getenv("WARCRAFTLOGS_CLIENT"),
+                    "translate": "True"
+                }
+                async with session.get(API_URL + "fights/" +
+                                       self.code, params=params) as resp:
+                    return await resp.json()
         except:
             _logger.error(
                 f"There was an error while getting logs info with {self.code} code")
             return None
 
-    def get_title(self):
+    async def get_title(self):
         """
         Return the logs title `str`
         """
-        return self.log_info["title"]
+        return (self.log_info)["title"]
 
-    def get_fight(self, fight_number):
+    async def get_fight(self, fight_number):
         """
         Return the `Fight` object from `list` of fights
         with the given fight_number
         """
-        fight = self.get_fights()[fight_number]
+        fight = (await self.get_fights())[fight_number]
         return Fight(**fight)
 
-    def get_fights(self):
+    async def get_fights(self):
         """
         Return `list` of `dict` fights from logs
         (excluding trash and reset pulls if it is raid)
         """
-        fights = self.log_info["fights"]
+        fights = (self.log_info)["fights"]
         fights[:] = [e for e in fights if e.get("boss")]
         return fights
 
-    def get_fights_amount(self):
+    async def get_fights_amount(self):
         """
         Return the :`int` number of fights
         """
-        return len(self.get_fights())
+        return len(await self.get_fights())
 
-    def get_total_duration(self):
+    async def get_total_duration(self):
         """
         Use to calculate duration of logs
 
         Return the `int` duration of logs that comes from the
         difference of first and last event
         """
-        return abs(self.log_info["start"] - self.log_info["end"])
+        return abs((self.log_info)["start"] - (self.log_info)["end"])
 
-    def get_zone(self):
+    async def get_zone(self):
         """
         Return the name of the logs zone as an `str`
 
@@ -75,7 +78,7 @@ class WarcraftlogsAPI():
         SANCTUM_OF_DOMINATION = 28
         NEXT_RAID = 29...
         """
-        zone = self.log_info["zone"]
+        zone = (self.log_info)["zone"]
         if zone == 25:
             return "Mythic+"
         elif zone == 26:
