@@ -23,7 +23,7 @@ Technology I have used:
 - ?token - Check the current price of WoW token
 
 ## [Invite Link](https://discord.com/api/oauth2/authorize?client_id=842687783523844149&permissions=67584&scope=bot)
-#
+
 ## Screenshoots
 
 `?affixes`

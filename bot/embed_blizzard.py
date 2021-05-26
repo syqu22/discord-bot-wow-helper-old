@@ -31,16 +31,16 @@ class EmbedBlizzardMessage():
     async def create_character(self, name_realm: str, region: str):
         try:
             api = BlizzardAPI()
-            # credentials[0] = Name, credentials[1] = Realm
-            credentials = name_realm.split("-", 1)
+            name, realm = name_realm.split("-", 1)
+
             character = await api.character_info(
-                credentials[0], credentials[1], region)
+                name, realm, region)
 
             # Make region EU
             if region == None:
                 region = "eu"
 
-            armory_url = f"https://worldofwarcraft.com/en-gb/character/{region}/{credentials[1]}/{credentials[0]}/"
+            armory_url = f"https://worldofwarcraft.com/en-gb/character/{region}/{realm}/{name}/"
 
             embed_message = {
                 "title": f"({character.level}) {character.name}-{character.realm} <{character.guild}>",
@@ -50,7 +50,7 @@ class EmbedBlizzardMessage():
                     "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
                 },
                 "image": {
-                    "url": await api.character_avatar(credentials[0], credentials[1], region)
+                    "url": await api.character_avatar(name, realm, region)
                 }
             }
             embed = Embed.from_dict(embed_message)
@@ -63,9 +63,9 @@ class EmbedBlizzardMessage():
                 name="Item level", value=f"({character.ilvl}) {character.eq_ilvl}"
             )
             embed.add_field(
-                name="Links", value=f"[Raider.IO](https://raider.io/characters/{region}/{credentials[1]}/{credentials[0]}) | "
-                f"[WarcraftLogs](https://www.warcraftlogs.com/character/{region}/{credentials[1]}/{credentials[0]}) | "
-                f"[WoWProgress](https://www.wowprogress.com/character/{region}/{credentials[1]}/{credentials[0]})"
+                name="Links", value=f"[Raider.IO](https://raider.io/characters/{region}/{realm}/{name}) | "
+                f"[WarcraftLogs](https://www.warcraftlogs.com/character/{region}/{realm}/{name}) | "
+                f"[WoWProgress](https://www.wowprogress.com/character/{region}/{realm}/{name})"
             )
             embed.add_field(
                 name="Covenant", value=f"{character.covenant}",
@@ -77,6 +77,6 @@ class EmbedBlizzardMessage():
             return embed
         except:
             _logger.error(
-                f"Character {credentials} with region {region} returned error")
+                f"Character {name}-{realm} with region {region} returned error")
             return Embed(title="Character", description="Wrong character name, realm or region. Remember to put "
                          "region after name-realm if the character is not on EU realm.")
