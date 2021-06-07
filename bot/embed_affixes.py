@@ -25,8 +25,9 @@ class EmbedAffixesMessage():
 
                 return embed
             else:
-                embed.add_field(name=f"Previous Week {affixes.weeks_since_launch-1} Affixes",
-                                value=affixes.previous_affixes())
+                if affixes.weeks_since_launch - 1 > 1:
+                    embed.add_field(name=f"Previous Week {affixes.weeks_since_launch-1} Affixes",
+                                    value=affixes.previous_affixes())
                 embed.add_field(name=f"Current Week {affixes.weeks_since_launch} Affixes",
                                 value=affixes.current_affixes())
                 embed.add_field(name=f"Next Week {affixes.weeks_since_launch+1} Affixes",

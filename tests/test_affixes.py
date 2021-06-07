@@ -11,7 +11,7 @@ def affixes():
     Affixes fixture that changes variable to single week
     """
     affixes = Affixes()
-    affixes.weeks_since_launch = 27
+    affixes.weeks_since_launch = 9
     return affixes
 
 
@@ -21,7 +21,7 @@ def test_weeks_since_launch(affixes):
     Return valid number of weeks since launch
     """
     assert isinstance(affixes.weeks_since_launch, int)
-    assert affixes.weeks_since_launch == 27
+    assert affixes.weeks_since_launch == 9
 
 
 def test_current_affixes(affixes):
@@ -30,13 +30,12 @@ def test_current_affixes(affixes):
     Return correct affixes from current week
     """
     current_affixes = affixes.current_affixes()
+    correct_affixes = ", ".join(
+        ["Fortified", "Inspiring", "Storming", "Prideful"])
 
     assert isinstance(current_affixes, str)
-    assert "Fortified" in current_affixes
-    assert "Spiteful" in current_affixes
-    assert "Grievous" in current_affixes
-    assert "Prideful" in current_affixes
-    assert "Quaking" not in current_affixes
+    assert current_affixes == correct_affixes
+    assert "Bolstering" not in current_affixes
 
 
 def test_next_affixes(affixes):
@@ -45,12 +44,11 @@ def test_next_affixes(affixes):
     Return correct affixes from incoming week
     """
     next_affixes = affixes.next_affixes()
+    correct_affixes = ", ".join(
+        ["Tyrannical", "Bursting", "Explosive", "Prideful"])
 
     assert isinstance(next_affixes, str)
-    assert "Tyrannical" in next_affixes
-    assert "Inspiring" in next_affixes
-    assert "Necrotic" in next_affixes
-    assert "Prideful" in next_affixes
+    assert next_affixes == correct_affixes
     assert "Bolstering" not in next_affixes
 
 
@@ -60,13 +58,12 @@ def test_previous_affixes(affixes):
     Return correct affixes from previous week
     """
     previous_affixes = affixes.previous_affixes()
+    correct_affixes = ", ".join(
+        ["Tyrannical", "Bolstering", "Necrotic", "Prideful"])
 
     assert isinstance(previous_affixes, str)
-    assert "Tyrannical" in previous_affixes
-    assert "Bolstering" in previous_affixes
-    assert "Storming" in previous_affixes
-    assert "Prideful" in previous_affixes
-    assert "Volcanic" not in previous_affixes
+    assert previous_affixes == correct_affixes
+    assert "Explosive" not in previous_affixes
 
 
 def test_affixes_from_week():
@@ -75,10 +72,9 @@ def test_affixes_from_week():
     """
     week = 1
     affixes_from_week = Affixes().affixes_from_week(week)
+    correct_affixes = ", ".join(
+        ["Fortified", "Bursting", "Volcanic", "Prideful"])
 
     assert isinstance(affixes_from_week, str)
-    assert "Fortified" in affixes_from_week
-    assert "Bursting" in affixes_from_week
-    assert "Volcanic" in affixes_from_week
-    assert "Prideful" in affixes_from_week
-    assert "Bolstering" not in affixes_from_week
+    assert affixes_from_week == correct_affixes
+    assert "Explosive" not in affixes_from_week
