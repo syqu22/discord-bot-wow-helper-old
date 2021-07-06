@@ -9,7 +9,7 @@ class Affixes:
     # List of the affixes from Shadowlands Season 2
     affixes = [
         ["Fortified", "Bursting", "Storming", "Prideful"],  # Week 1 - First
-        ["TBD"],
+        ["Tyrannical", "Raging", "Volcanic", "Tormented"],
         ["TBD"],
         ["TBD"],
         ["TBD"],
