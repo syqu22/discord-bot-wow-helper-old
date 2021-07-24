@@ -2,14 +2,15 @@ from datetime import datetime
 from math import floor
 
 # H:M d-m-y
-FIRST_WEEK = "8:00 30-06-2021"
+FIRST_WEEK = "9:00 7-07-2021"
 
 
 class Affixes:
     # List of the affixes from Shadowlands Season 2
     affixes = [
-        ["Fortified", "Bursting", "Storming", "Prideful"],  # Week 1 - First
-        ["Tyrannical", "Raging", "Volcanic", "Tormented"],
+        ["Tyrannical", "Raging", "Volcanic", "Tormented"],  # Week 1 - First
+        ["Fortified", "Inspiring", "Grievous", "Tormented"],
+        ["Tyrannical", "Spiteful", "Necrotic", "Tormented"],
         ["TBD"],
         ["TBD"],
         ["TBD"],
@@ -17,9 +18,7 @@ class Affixes:
         ["TBD"],
         ["TBD"],
         ["TBD"],
-        ["TBD"],
-        ["TBD"],
-        ["Tyrannical", "Bolstering", "Explosive", "Tormented"]]  # Week 12 - Last
+        ["TBD"]]  # Week 12 - Last
 
     # week 1 = affixes[0]
     # week 26 = affixes[25]
