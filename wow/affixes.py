@@ -11,14 +11,15 @@ class Affixes:
         ["Tyrannical", "Raging", "Volcanic", "Tormented"],  # Week 1 - First
         ["Fortified", "Inspiring", "Grievous", "Tormented"],
         ["Tyrannical", "Spiteful", "Necrotic", "Tormented"],
+        ["Fortified", "Bolstering", "Quaking", "Tormented"],
+        ["Tyrannical", "Sanguine", "Storming", "Tormented"],
+        ["Fortified", "Raging", "Explosive", "Tormented"],
+        ["Tyrannical", "Bursting", "Volcanic", "Tormented"],
         ["TBD"],
         ["TBD"],
         ["TBD"],
-        ["TBD"],
-        ["TBD"],
-        ["TBD"],
-        ["TBD"],
-        ["TBD"]]  # Week 12 - Last
+        ["Tyrannical", "Bolstering", "Explosive", "Tormented"],
+        ["Fortified", "Bursting", "Storming", "Tormented"]]  # Week 12 - Last
 
     # week 1 = affixes[0]
     # week 26 = affixes[25]
