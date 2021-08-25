@@ -15,7 +15,7 @@ class Affixes:
         ["Tyrannical", "Sanguine", "Storming", "Tormented"],
         ["Fortified", "Raging", "Explosive", "Tormented"],
         ["Tyrannical", "Bursting", "Volcanic", "Tormented"],
-        ["TBD"],
+        ["Fortified", "Spiteful", "Grievous", "Tormented"],
         ["TBD"],
         ["TBD"],
         ["Tyrannical", "Bolstering", "Explosive", "Tormented"],
