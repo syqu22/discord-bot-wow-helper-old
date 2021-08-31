@@ -17,7 +17,7 @@ class Affixes:
         ["Tyrannical", "Bursting", "Volcanic", "Tormented"],
         ["Fortified", "Spiteful", "Grievous", "Tormented"],
         ["Tyrannical", "Inspiring", "Quaking", "Tormented"],
-        ["TBD"],
+        ["Fortified", "Sanguine", "Necrotic", "Tormented"],
         ["Tyrannical", "Bolstering", "Explosive", "Tormented"],
         ["Fortified", "Bursting", "Storming", "Tormented"]]  # Week 12 - Last
 
