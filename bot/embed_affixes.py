@@ -1,9 +1,5 @@
-from datetime import datetime
 from discord.embeds import Embed
 from wow.affixes import Affixes
-import logging
-
-_logger = logging.getLogger("discord")
 
 
 class EmbedAffixesMessage():
@@ -13,9 +9,6 @@ class EmbedAffixesMessage():
             embed_message = {
                 "title": "Affixes",
                 "color": 2075661,
-                "footer": {
-                    "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-                },
             }
             embed = Embed.from_dict(embed_message)
             if week:
@@ -35,6 +28,7 @@ class EmbedAffixesMessage():
 
                 return embed
         except:
-            _logger.error(
+            print(
                 f"Affixes command with additional parameters {week} returned error")
+
             return Embed(title="Wrong week", description="Make sure the command is correct \n Example: ?affixes <week>")

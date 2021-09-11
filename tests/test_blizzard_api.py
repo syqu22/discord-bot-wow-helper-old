@@ -56,7 +56,7 @@ def test_character_info_api(blizzard):
     Return non empty dict that character name
     """
     character = blizzard.api.wow.profile.get_character_profile_summary(
-        "eu", "en_GB", "ragnaros", "syqu")
+        "eu", "en_GB", "kazzak", "syqu")
 
     assert character
     assert isinstance(character, dict)
@@ -76,7 +76,7 @@ async def test_character_info(blizzard):
     assert character.name == "Syqu"
     assert character.realm == "Burning Legion"
     assert character.faction == "Horde"
-    assert character.race == "Goblin"
+    assert character.race == "Orc"
     assert character.spec
     assert character.char_class == "Warlock"
     assert character.ilvl >= character.eq_ilvl

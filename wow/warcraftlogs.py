@@ -1,10 +1,9 @@
 import os
+
 import aiohttp
-import logging
-from wow.fight import Fight
 from asyncinit import asyncinit
 
-_logger = logging.getLogger("discord")
+from wow.fight import Fight
 
 API_URL = "https://www.warcraftlogs.com:443/v1/report/"
 
@@ -26,7 +25,7 @@ class WarcraftlogsAPI():
                                        self.code, params=params) as resp:
                     return await resp.json()
         except:
-            _logger.error(
+            print(
                 f"There was an error while getting logs info with {self.code} code")
             return None
 

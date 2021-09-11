@@ -1,25 +1,13 @@
 import discord
-import logging
 from discord.ext import commands
-
 from wow.blizzard import BlizzardAPI
 
-from bot.embed_logs import EmbedLogsMesage
 from bot.embed_affixes import EmbedAffixesMessage
 from bot.embed_blizzard import EmbedBlizzardMessage
+from bot.embed_logs import EmbedLogsMesage
 
 ACTIVITY_MESSAGE = "?help - WoW Helper"
 COMMAND_PREFIX = "?"
-
-
-# Set up logger
-_logger = logging.getLogger("discord")
-_logger.setLevel(logging.INFO)
-handler = logging.FileHandler(
-    filename="logs/discord.log", encoding="utf-8", mode="w")
-handler.setFormatter(logging.Formatter(
-    "%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-_logger.addHandler(handler)
 
 # Create bot
 bot = commands.Bot(activity=discord.Game(
@@ -28,7 +16,6 @@ bot = commands.Bot(activity=discord.Game(
 
 @bot.event
 async def on_ready():
-    _logger.info(f"Bot logged in as {bot.user}")
     print(f"Bot logged in as {bot.user}")
     # Start fetching wowtoken data task
     await BlizzardAPI().fetch_wow_token_prices.start()

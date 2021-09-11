@@ -1,10 +1,9 @@
 import os
-from wow.character import Character
+
 from blizzardapi import BlizzardApi
 from discord.ext import tasks
-import logging
 
-_logger = logging.getLogger("discord")
+from wow.character import Character
 
 REGIONS = ["eu", "us", "kr", "tw", "cn"]
 LOCALE = "en_GB"
@@ -28,9 +27,9 @@ class BlizzardAPI():
                 token_prices[region] = int(api.get_token_index(
                     region, LOCALE)["price"]) / 10000
 
-            _logger.info("Succesfully fetched WoW token prices data")
+            print("Succesfully fetched WoW token prices data")
         except:
-            _logger.error(
+            print(
                 "There was an error during fetching WoW token prices data")
             return None
 
@@ -56,7 +55,7 @@ class BlizzardAPI():
 
             return Character(**character)
         except:
-            _logger.error(
+            print(
                 f"There was an error while getting character info with {name}-{realm} credentials and region {region}")
             return None
 
@@ -74,6 +73,6 @@ class BlizzardAPI():
 
             return avatar["assets"][1]["value"]
         except:
-            _logger.error(
+            print(
                 f"There was an error while getting character avatar for {name}-{realm}")
             return None

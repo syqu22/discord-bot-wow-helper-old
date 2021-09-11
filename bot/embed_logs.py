@@ -1,9 +1,7 @@
 from datetime import datetime
+
 from discord.embeds import Embed
 from wow.warcraftlogs import WarcraftlogsAPI
-import logging
-
-_logger = logging.getLogger("discord")
 
 
 class EmbedLogsMesage():
@@ -18,9 +16,6 @@ class EmbedLogsMesage():
                 "title": f"{await code.get_title()} - {datetime.fromtimestamp(await code.get_total_duration()/1000.0).strftime('%H:%M:%S')} ",
                 "url": self.url,
                 "color": 9066993,
-                "footer": {
-                    "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-                },
                 "image": {
                     "url": await zone_image(code)
                 }
@@ -35,13 +30,15 @@ class EmbedLogsMesage():
 
             return embed
         except:
-            _logger.error(f"Log with url {self.url} returned error")
+            print(f"Log with url {self.url} returned error")
+
             return Embed(title="Log error",
                          description="Wrong link or logs are set to private.")
 
 
 async def zone_image(logs: WarcraftlogsAPI):
     zone = await logs.get_zone()
+
     if zone == "Mythic+":
         return "https://i.imgur.com/VT7yTYl.jpg"
     elif zone == "Castle Nathria":

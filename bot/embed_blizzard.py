@@ -1,9 +1,5 @@
-from datetime import datetime
 from discord.embeds import Embed
 from wow.blizzard import BlizzardAPI
-import logging
-
-_logger = logging.getLogger("discord")
 
 
 class EmbedBlizzardMessage():
@@ -13,9 +9,6 @@ class EmbedBlizzardMessage():
             embed_message = {
                 "title": "WoW Tokens",
                 "color": 4433254,
-                "footer": {
-                    "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-                },
             }
             embed = Embed.from_dict(embed_message)
             tokens = await blizzard.get_wow_token_prices()
@@ -25,7 +18,8 @@ class EmbedBlizzardMessage():
 
             return embed
         except:
-            _logger.error(f"Token info not found")
+            print(f"Token info not found")
+
             return Embed(title="WoW Token", description="Token info not found")
 
     async def create_character(self, name_realm: str, region: str):
@@ -46,9 +40,6 @@ class EmbedBlizzardMessage():
                 "title": f"({character.level}) {character.name}-{character.realm} <{character.guild}>",
                 "url": armory_url,
                 "color": 4433254,
-                "footer": {
-                    "text": datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-                },
                 "image": {
                     "url": await api.character_avatar(name, realm, region)
                 }
@@ -76,7 +67,8 @@ class EmbedBlizzardMessage():
 
             return embed
         except:
-            _logger.error(
+            print(
                 f"Character {name}-{realm} with region {region} returned error")
+
             return Embed(title="Character", description="Wrong character name, realm or region. Remember to put "
                          "region after name-realm if the character is not on EU realm.")
