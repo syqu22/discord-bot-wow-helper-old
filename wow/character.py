@@ -27,10 +27,11 @@ class Character:
         ach_points: `int`
             Amount of achievements points the character has
         others: `dict`
-            Other not used parameters
+            Other parameters like:
+                - covenant_progress
         """
 
-    def __init__(self, name: str, realm: str, level: int, faction: str, race: str, active_spec: str, character_class: str, average_item_level: int, equipped_item_level: int, guild: str, covenant_progress: str, achievement_points: int, **others: dict):
+    def __init__(self, name: str, realm: str, level: int, faction: str, race: str, active_spec: str, character_class: str, average_item_level: int, equipped_item_level: int, guild: str, achievement_points: int, **others: dict):
         self.name = name
         self.realm = realm["name"]
         self.level = level
@@ -41,13 +42,18 @@ class Character:
         self.ilvl = average_item_level
         self.eq_ilvl = equipped_item_level
         self.guild = guild["name"]
-        self.covenant = self.set_covenant(
-            covenant_progress["chosen_covenant"]["name"], covenant_progress["renown_level"])
-        self.ach_points = achievement_points
         self.others = others
+        self.covenant = self.set_covenant()
+        self.ach_points = achievement_points
 
-    def set_covenant(self, covenant: str, renown: int):
-        return f"{covenant} ({renown})"
+    def set_covenant(self):
+        covenant = self.others.get("covenant_progress")
+        if covenant:
+            name = covenant["chosen_covenant"]["name"]
+            level = covenant["renown_level"]
+            return f"{name} ({level})"
+
+        return None
 
     def __str__(self):
         return f"{self.name}-{self.realm} ({self.level}) [{self.faction}] {self.race} {self.spec} {self.char_class} {self.ilvl} {self.guild} {self.covenant} {self.ach_points}"
