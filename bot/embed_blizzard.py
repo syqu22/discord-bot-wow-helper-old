@@ -34,7 +34,7 @@ class EmbedBlizzardMessage():
             armory_url = f"https://worldofwarcraft.com/en-gb/character/{region}/{realm}/{name}/"
 
             embed_message = {
-                "title": f"({character.level}) {character.name}-{character.realm} <{character.guild}>",
+                "title": f"({character.level}) {character.name}-{character.realm} {await set_guild(character.guild)}",
                 "url": armory_url,
                 "color": 4433254,
                 "image": {
@@ -79,3 +79,9 @@ async def normalize_region(region: str):
             return "us"
     # Default EU
     return "eu"
+
+
+async def set_guild(guild: str):
+    if guild:
+        return f"<{guild}>"
+    return " "

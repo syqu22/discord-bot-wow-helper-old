@@ -20,18 +20,15 @@ class Character:
             Item level of the character
         eq_ilvl: `int`
             Equipped Item level of the character
-        guild: `str`
-            Guild name of the character
-        covenant: `str`
-            Covenant of the character and renown level
         ach_points: `int`
             Amount of achievements points the character has
         others: `dict`
             Other parameters like:
                 - covenant_progress
+                - guild
         """
 
-    def __init__(self, name: str, realm: str, level: int, faction: str, race: str, active_spec: str, character_class: str, average_item_level: int, equipped_item_level: int, guild: str, achievement_points: int, **others: dict):
+    def __init__(self, name: str, realm: str, level: int, faction: str, race: str, active_spec: str, character_class: str, average_item_level: int, equipped_item_level: int, achievement_points: int, **others: dict):
         self.name = name
         self.realm = realm["name"]
         self.level = level
@@ -41,8 +38,8 @@ class Character:
         self.char_class = character_class["name"]
         self.ilvl = average_item_level
         self.eq_ilvl = equipped_item_level
-        self.guild = guild["name"]
         self.others = others
+        self.guild = self.set_guild()
         self.covenant = self.set_covenant()
         self.ach_points = achievement_points
 
@@ -52,7 +49,12 @@ class Character:
             name = covenant["chosen_covenant"]["name"]
             level = covenant["renown_level"]
             return f"{name} ({level})"
+        return None
 
+    def set_guild(self):
+        guild = self.others.get("guild")
+        if guild:
+            return guild["name"]
         return None
 
     def __str__(self):
