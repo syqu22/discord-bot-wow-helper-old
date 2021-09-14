@@ -46,6 +46,6 @@ async def token(ctx):
 
 
 @bot.command(brief="Shows information about given character", description="Shows information about given character. Make sure character name and realm"
-             "are written correctly in format <name>-<realm> [region] (capitalization is not neccessary). By default region is set to EU.")
+             "are written correctly in format <name>-<realm> [region] (capitalization is not neccessary). By default region is set to EU, other supported regions are: \nUS, KR, TW, CN. (Use shortcuts for regions)")
 async def character(ctx, name_realm: str, region: str = None):
     await ctx.channel.send(embed=await EmbedBlizzardMessage().create_character(name_realm=name_realm, region=region))

@@ -26,13 +26,10 @@ class EmbedBlizzardMessage():
         try:
             api = BlizzardAPI()
             name, realm = name_realm.split("-", 1)
+            region = await normalize_region(region)
 
             character = await api.character_info(
                 name, realm, region)
-
-            # Make region EU
-            if region == None:
-                region = "eu"
 
             armory_url = f"https://worldofwarcraft.com/en-gb/character/{region}/{realm}/{name}/"
 
@@ -72,3 +69,13 @@ class EmbedBlizzardMessage():
 
             return Embed(title="Character", description="Wrong character name, realm or region. Remember to put "
                          "region after name-realm if the character is not on EU realm.")
+
+
+async def normalize_region(region: str):
+    if region:
+        region = region.lower()
+
+        if region == "na" or region == "us":
+            return "us"
+    # Default EU
+    return "eu"
