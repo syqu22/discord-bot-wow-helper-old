@@ -6,7 +6,7 @@ from bot.embed_affixes import EmbedAffixesMessage
 from bot.embed_blizzard import EmbedBlizzardMessage
 from bot.embed_logs import EmbedLogsMesage
 
-ACTIVITY_MESSAGE = "?help - WoW Helper"
+ACTIVITY_MESSAGE = "v2 update soon!"
 COMMAND_PREFIX = "?"
 
 # Create bot
